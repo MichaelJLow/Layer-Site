@@ -1,0 +1,94 @@
+---
+import Layout from '../components/Layout.astro';
+import IntegrationMarquee from '../components/IntegrationMarquee.astro';
+---
+
+<Layout
+  title="Integration Direction Lab | Layer"
+  description="Internal visual prototype for Layer's integration reassurance section."
+  noindex
+>
+  <main class="integration-lab">
+    <a class="integration-lab__back" href="/#how-we-work">← Back to the live section</a>
+
+    <section class="integration-prototype" aria-labelledby="integration-title">
+      <div class="integration-prototype__copy">
+        <p class="integration-prototype__eyebrow">WORKS WITH YOUR STACK</p>
+        <h1 id="integration-title">Built around the tools your team already uses.</h1>
+        <p>
+          Layer connects the systems already running your business—email, CRM, finance, documents and internal tools—so useful work can move between them without forcing a platform change.
+        </p>
+        <p class="integration-prototype__note">And the tools specific to your business.</p>
+      </div>
+
+      <IntegrationMarquee />
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .integration-lab {
+    max-width: 88rem;
+    margin: 0 auto;
+    padding: 3rem clamp(1.25rem, 4vw, 4rem) 5rem;
+  }
+
+  .integration-lab__back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: var(--layer-navy);
+    font: 0.72rem/1 'IBM Plex Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .integration-prototype {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(27rem, 1.1fr);
+    gap: clamp(2rem, 7vw, 8rem);
+    align-items: center;
+    padding: clamp(2rem, 5vw, 5rem);
+    overflow: hidden;
+    background:
+      linear-gradient(rgba(29, 53, 87, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(29, 53, 87, 0.045) 1px, transparent 1px),
+      #f6f3ed;
+    background-size: 2.5rem 2.5rem;
+    border: 1px solid rgba(29, 53, 87, 0.14);
+    border-radius: 0.5rem;
+  }
+
+  .integration-prototype__eyebrow {
+    color: #a56743;
+    font: 0.68rem/1 'IBM Plex Mono', monospace;
+    letter-spacing: 0.11em;
+  }
+
+  .integration-prototype h1 {
+    max-width: 35rem;
+    margin: 1rem 0 1.5rem;
+    color: #111318;
+    font-size: clamp(2.5rem, 4.3vw, 5.25rem);
+    font-weight: 400;
+    letter-spacing: -0.065em;
+    line-height: 0.92;
+  }
+
+  .integration-prototype__copy > p:not(.integration-prototype__eyebrow, .integration-prototype__note) {
+    max-width: 34rem;
+    color: #596575;
+    font-size: 1.08rem;
+    line-height: 1.62;
+  }
+
+  .integration-prototype__note {
+    margin-top: 2rem;
+    color: var(--layer-navy);
+    font: 0.72rem/1.4 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 780px) {
+    .integration-prototype { grid-template-columns: 1fr; }
+  }
+</style>

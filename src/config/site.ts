@@ -29,7 +29,7 @@ export const site = {
   github: 'https://github.com/MichaelJLow',
   linkedin: 'https://www.linkedin.com/company/workwithlayer/',
   logo: '/icons/layer-icon-512.png',
-  availability: 'Available for selected AI Opportunity Sessions and implementation projects.',
+  availability: 'Available for selected AI Opportunity Audits and workflow builds.',
   availabilityShort: 'Available for selected projects',
   location: 'Based in São Paulo, working with clients remotely',
   headshot: '/images/headshot-portfolio-tight.png',
@@ -51,14 +51,14 @@ export const seo = {
       'Learn how Layer approaches business systems: understand the process first, then use automation, AI and human judgement where each creates real value.',
   },
   howWeWork: {
-    title: 'How Layer Works | Start With an AI Opportunity Session',
+    title: 'How Layer Works | Start With an AI Opportunity Audit',
     description:
-      'Start with a no-cost AI Opportunity Session. Where deeper evidence is justified, a paid AI Workflow Assessment determines the right next step.',
+      'Start with an AI Opportunity Audit, then design, build and launch one controlled workflow. Choose a complete handover or ongoing management by Layer.',
   },
   contact: {
-    title: 'Work With Layer | Book a No-Cost AI Opportunity Session',
+    title: 'Work With Layer | Request an AI Opportunity Audit',
     description:
-      'Tell Layer about an important business priority or operational problem. Book a no-cost AI Opportunity Session and receive a concise recommendation on the right next step.',
+      'Tell Layer where work is getting stuck. Request an AI Opportunity Audit and receive a clear view of the strongest starting point and practical next step.',
   },
   caseStudies: {
     title: 'Case Studies | Systems Built Around Real Operational Work',
@@ -104,17 +104,17 @@ export const organizationJsonLd = {
  * Primary commercial CTA
  * ------------------------------------------------------------------ */
 
-/** Homepage and nav primary CTA: no-cost AI Opportunity Session. */
+/** Homepage and nav primary CTA. */
 export const primaryCta = {
-  label: 'Book a no-cost AI Opportunity Session',
-  shortLabel: 'AI Opportunity Session',
+  label: 'Request AI Opportunity Audit',
+  shortLabel: 'AI Opportunity Audit',
   href: '/#contact',
-  note: 'No-cost AI Opportunity Session. No obligation.',
+  note: 'Limited no-cost audits available to selected businesses.',
 } as const;
 
 /** Same offer as primaryCta. Kept so older pages keep compiling. */
 export const reviewCta = {
-  label: 'Book a no-cost AI Opportunity Session',
+  label: 'Request AI Opportunity Audit',
   href: '/#contact',
 } as const;
 
@@ -129,27 +129,28 @@ export const howIWorkCta = {
 } as const;
 
 /**
- * No-cost AI Opportunity Session (homepage primary CTA).
- * Surfaces likely opportunities and decides whether a paid assessment is justified. Not a build.
+ * AI Opportunity Audit (homepage primary CTA).
+ * Identifies the strongest first workflow and recommends the right next step. Not a build.
  */
 export const discoveryCall = {
-  label: 'Book a no-cost AI Opportunity Session',
-  shortLabel: 'AI Opportunity Session',
+  label: 'Request AI Opportunity Audit',
+  shortLabel: 'AI Opportunity Audit',
   href: '/#contact',
-  duration: 'usually about 45 minutes',
-  title: 'Book a no-cost AI Opportunity Session',
+  duration: 'a focused, bounded engagement',
+  title: 'Request an AI Opportunity Audit',
   intro:
-    'A focused conversation about an important business priority, the likely opportunity areas and any obvious blockers. You receive a concise written summary and an honest recommendation on whether a paid assessment is justified.',
+    'A structured review of how work moves through an important area of the business. You receive the strongest opportunity areas, a recommended first workflow and a practical next step.',
   includes: [
-    'The business priority and the operational friction around it',
-    'Likely opportunity areas and obvious blockers',
-    'A concise written summary and recommendation on the right next step',
+    'A focused review of how work moves through the priority area',
+    'The strongest opportunities, constraints and obvious risks',
+    'A recommended first workflow and the value it should create',
+    'A concise written summary and practical next step',
   ],
-  subject: 'No-cost AI Opportunity Session',
+  subject: 'AI Opportunity Audit',
   bodyLines: [
     'Hello Michael,',
     '',
-    'I would like to book a no-cost AI Opportunity Session.',
+    'I would like to request an AI Opportunity Audit.',
     '',
     'Business and what we do:',
     'The business priority or workflow that is causing problems:',
@@ -165,7 +166,7 @@ export const fitCheck = {
   shortLabel: discoveryCall.shortLabel,
   href: discoveryCall.href,
   duration: discoveryCall.duration,
-  title: 'Not sure an Opportunity Session is right?',
+  title: 'Not sure an Opportunity Audit is right?',
   intro: discoveryCall.intro,
   includes: discoveryCall.includes,
   subject: discoveryCall.subject,
@@ -597,7 +598,7 @@ export const homeFounderLine = {
 const enquiryBodyLines = [
   'Hello Michael,',
   '',
-  'I would like to book a no-cost AI Opportunity Session.',
+  'I would like to request an AI Opportunity Audit.',
   '',
   'Business and what we do:',
   'The business priority or workflow that is causing problems:',
@@ -608,10 +609,10 @@ const enquiryBodyLines = [
 
 export const contact = {
   kicker: 'Contact',
-  title: 'Start with a no-cost AI Opportunity Session.',
+  title: 'Start with an AI Opportunity Audit.',
   intro:
-    'Tell us about an important business priority or operational problem. We will surface the likely opportunity areas and recommend whether a paid assessment is justified.',
-  subject: 'No-cost AI Opportunity Session',
+    'Tell us where work is getting stuck. We will identify the strongest starting point, the value it could create and the right next step.',
+  subject: 'AI Opportunity Audit',
   bodyLines: enquiryBodyLines,
   helper: 'Answer what you can. A short note about the process is enough to start.',
 } as const;
@@ -749,34 +750,33 @@ export const capabilities = {
 
 export const howIWork = {
   intro:
-    'Start with a no-cost AI Opportunity Session. Further work begins only when there is enough evidence to justify a paid assessment or another clear next step.',
+    'Start with an AI Opportunity Audit to identify where AI could create useful, credible value. If there is a strong opportunity, Layer designs, builds and launches the first workflow as one scoped engagement.',
   fitCheckNote:
-    'The Opportunity Session is not an assessment or a build. It decides whether deeper investigation is justified and may recommend no further work.',
+    'After launch, the engagement can end with a complete handover or continue with Layer responsible for monitoring, maintenance and improvement.',
   chooseDiscovery: {
-    title: 'After the Opportunity Session',
-    intro: 'The right next step depends on the strength of the opportunity and the evidence already available.',
+    title: 'AI Opportunity Audit',
+    intro: 'The audit turns a broad interest in AI into a clear decision about where to start and whether a build is justified.',
     rows: [
-      { signal: 'One priority workflow needs deeper investigation and a Value Case', steer: 'Paid AI Workflow Assessment' },
-      { signal: 'The main constraint is fragmented, outdated or unsafe operational knowledge', steer: 'Assess the knowledge foundation path' },
-      { signal: 'The process should be simplified before any system is built', steer: 'Change the process first' },
-      { signal: 'There is no worthwhile problem, or the timing is wrong', steer: 'No build' },
+      { signal: 'The strongest operational opportunity', steer: 'Where to start' },
+      { signal: 'Expected value, risks and practical constraints', steer: 'What matters' },
+      { signal: 'A recommended first workflow and delivery scope', steer: 'What to build' },
+      { signal: 'No worthwhile opportunity or the timing is wrong', steer: 'No build' },
     ],
     close:
-      'A paid assessment is recommended only when deeper evidence is needed to make a responsible decision about implementation.',
+      'A limited number of audits are currently available at no cost to selected businesses. The audit is valuable in its own right and does not commit you to a build.',
   },
   chooseBuild: {
-    title: 'What can follow',
+    title: 'One build. Two paths after launch.',
     rows: [
-      { need: 'Build the recommended first workflow, with controls and a handover', offer: 'AI Workflow Implementation' },
-      { need: 'Establish trusted, permissioned knowledge for the priority workflow', offer: 'AI Knowledge Foundation' },
-      { need: 'Prioritise, govern and measure the wider AI roadmap', offer: 'AI Enablement Partner' },
+      { need: 'Design, integrate, test and launch one controlled workflow', offer: 'AI Workflow Build' },
+      { need: 'Take ownership after stabilisation and documentation', offer: 'Handover to your team' },
+      { need: 'Keep Layer responsible for operational health and improvement', offer: 'AI Workflow Management' },
     ],
   },
   path: [
-    { step: 'AI Opportunity Session', detail: 'Understand the priority, surface likely opportunities and decide whether deeper assessment is justified.' },
-    { step: 'AI Workflow Assessment', detail: 'Map one priority workflow, build the Value Case and make a decision-ready recommendation.' },
-    { step: 'Implementation or foundation', detail: 'Build one controlled workflow or establish the trusted knowledge it needs.' },
-    { step: 'Adopt, measure and improve', detail: 'Stabilise the system, review observed value and continue only where evidence supports it.' },
+    { step: 'Audit the opportunity', detail: 'Identify the strongest opportunity, test its value and define a responsible first build.' },
+    { step: 'Design, build and launch', detail: 'Create one production-ready workflow around your tools, controls and ways of working.' },
+    { step: 'Handover or ongoing management', detail: 'Take ownership with documentation and training, or retain Layer to monitor, maintain and improve the workflow.' },
   ],
   nextStepLabel: 'Next step',
 } as const;
@@ -793,9 +793,8 @@ export const featuredProjectSlugs = ['opsdesk-ai'] as const;
 
 export const nav = [
   { label: 'What We Build', href: '/#systems' },
-  { label: 'How It Works', href: '/#what-we-build' },
+  { label: 'How It Works', href: '/#how-we-work' },
   { label: 'About', href: '/about' },
-  { label: 'Work Together', href: '/#how-we-work' },
   { label: 'Contact', href: '/#contact' },
 ] as const;
 
@@ -872,7 +871,7 @@ export const hero = {
   statusPill: 'For selected workflow projects' as const,
   statusChips: [
     'For selected workflow projects',
-    'No-cost AI Opportunity Session',
+    'AI Opportunity Audit',
     'Intake · automation · approvals',
   ] as const,
   cta: primaryCta,
