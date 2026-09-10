@@ -29,7 +29,7 @@ export const site = {
   github: 'https://github.com/MichaelJLow',
   linkedin: 'https://www.linkedin.com/company/workwithlayer/',
   logo: '/icons/layer-icon-512.png',
-  availability: 'Available for selected workflow reviews and implementation projects.',
+  availability: 'Available for selected AI Opportunity Audits and workflow builds.',
   availabilityShort: 'Available for selected projects',
   location: 'Based in São Paulo, working with clients remotely',
   headshot: '/images/headshot-portfolio-tight.png',
@@ -51,14 +51,14 @@ export const seo = {
       'Learn how Layer approaches business systems: understand the process first, then use automation, AI and human judgement where each creates real value.',
   },
   howWeWork: {
-    title: 'How Layer Works | No-Cost Workflow Review First',
+    title: 'How Layer Works | Start With an AI Opportunity Audit',
     description:
-      'Every Layer engagement starts with a no-cost review of one real workflow. If the process is worth fixing, the next step is a scoped implementation or further discovery.',
+      'Start with an AI Opportunity Audit, then design, build and launch one controlled workflow. Choose a complete handover or ongoing management by Layer.',
   },
   contact: {
-    title: 'Work With Layer | Book a No-Cost Workflow Review',
+    title: 'Work With Layer | Request an AI Opportunity Audit',
     description:
-      'Tell Layer about one operational process that is costing time. Book a no-cost workflow review and get a clear recommendation on the highest-value next step.',
+      'Tell Layer where work is getting stuck. Request an AI Opportunity Audit and receive a clear view of the strongest starting point and practical next step.',
   },
   caseStudies: {
     title: 'Case Studies | Systems Built Around Real Operational Work',
@@ -104,17 +104,17 @@ export const organizationJsonLd = {
  * Primary commercial CTA
  * ------------------------------------------------------------------ */
 
-/** Homepage and nav primary CTA: no-cost workflow review. */
+/** Homepage and nav primary CTA. */
 export const primaryCta = {
-  label: 'Book a no-cost workflow review',
-  shortLabel: 'No-cost review',
+  label: 'Request AI Opportunity Audit',
+  shortLabel: 'AI Opportunity Audit',
   href: '/#contact',
-  note: 'No-cost workflow review. No obligation.',
+  note: 'Limited no-cost audits available to selected businesses.',
 } as const;
 
 /** Same offer as primaryCta. Kept so older pages keep compiling. */
 export const reviewCta = {
-  label: 'Book a no-cost workflow review',
+  label: 'Request AI Opportunity Audit',
   href: '/#contact',
 } as const;
 
@@ -129,30 +129,31 @@ export const howIWorkCta = {
 } as const;
 
 /**
- * No-cost workflow review (homepage primary CTA).
- * Maps one real process and recommends the next step. Not a build.
+ * AI Opportunity Audit (homepage primary CTA).
+ * Identifies the strongest first workflow and recommends the right next step. Not a build.
  */
 export const discoveryCall = {
-  label: 'Book a no-cost workflow review',
-  shortLabel: 'No-cost review',
+  label: 'Request AI Opportunity Audit',
+  shortLabel: 'AI Opportunity Audit',
   href: '/#contact',
-  duration: 'usually about 45 minutes',
-  title: 'Book a no-cost workflow review',
+  duration: 'a focused, bounded engagement',
+  title: 'Request an AI Opportunity Audit',
   intro:
-    'A focused conversation about one important process: how it actually runs, where time is being lost, and whether there is a worthwhile next step. If there is not, we will say so.',
+    'A structured review of how work moves through an important area of the business. You receive the strongest opportunity areas, a recommended first workflow and a practical next step.',
   includes: [
-    'How one important workflow actually runs today',
-    'Where manual work, handoffs and delays are costing time',
-    'A recommended starting point, or an honest recommendation to leave it',
+    'A focused review of how work moves through the priority area',
+    'The strongest opportunities, constraints and obvious risks',
+    'A recommended first workflow and the value it should create',
+    'A concise written summary and practical next step',
   ],
-  subject: 'No-cost workflow review',
+  subject: 'AI Opportunity Audit',
   bodyLines: [
     'Hello Michael,',
     '',
-    'I would like to book a no-cost workflow review.',
+    'I would like to request an AI Opportunity Audit.',
     '',
     'Business and what we do:',
-    'The workflow that is causing problems:',
+    'The business priority or workflow that is causing problems:',
     'Tools we currently use:',
     '',
     'Thanks,',
@@ -165,7 +166,7 @@ export const fitCheck = {
   shortLabel: discoveryCall.shortLabel,
   href: discoveryCall.href,
   duration: discoveryCall.duration,
-  title: 'Not sure a Review is right?',
+  title: 'Not sure an Opportunity Audit is right?',
   intro: discoveryCall.intro,
   includes: discoveryCall.includes,
   subject: discoveryCall.subject,
@@ -178,9 +179,9 @@ export const fitCheck = {
 
 export const offerLadder = {
   supportingLine:
-    'Prices are starting points for typical scope. The final quote is confirmed after a Review or Audit. Tool subscriptions (automation hosting, email, CRM, model usage) are usually client owned.',
+    'The no-cost AI Opportunity Session determines whether deeper investigation is justified. Any paid assessment or implementation is scoped separately. Tool subscriptions are usually client owned.',
   creditLine:
-    'A Workflow Review is credited in full against a Workflow Audit on the same workflow within 30 days.',
+    'The AI Opportunity Session is no cost. A paid AI Workflow Assessment begins only when deeper evidence is justified.',
   scopeLine:
     'Implementation price depends on the scope of the work, not on which discovery route you took.',
   groups: [
@@ -189,42 +190,41 @@ export const offerLadder = {
       summary: 'Work out whether the workflow is worth fixing, and how.',
       tiers: [
         {
-          name: 'Workflow Review',
-          price: 'from £350',
-          job: 'Is this worth fixing, and roughly how?',
+          name: 'AI Opportunity Session',
+          price: 'No cost',
+          job: 'Is there a credible opportunity worth investigating?',
           bestFor:
-            'One owner or office manager who can explain the whole process, one main tool chain, one obvious pain point.',
+            'A business with an important priority or operational friction point that may justify deeper investigation.',
           includes: [
-            'One 90 minute working session',
-            'One workflow walked through end to end',
-            'Top friction points and quick wins',
-            'Rough hours saved and error risk estimate',
-            'An honest go or no-go recommendation',
-            'Short written summary, usually within 48 hours',
+            'A short structured conversation about the business priority',
+            'Likely opportunity areas and obvious blockers',
+            'A concise written summary',
+            'An honest recommendation on whether a paid assessment is justified',
           ],
           excludes: [
-            'Multi-stakeholder interviews',
-            'Current and future-state workflow diagrams',
-            'Integration and data ownership assessment',
-            'A written build scope or fixed quote',
+            'Detailed workflow or system investigation',
+            'Solution or architecture design',
+            'A full Value Case, implementation scope, price or timeline',
           ],
         },
         {
-          name: 'Workflow Audit',
-          price: 'from £950',
-          job: 'Design the fix properly and scope a build.',
+          name: 'AI Workflow Assessment',
+          price: 'Scoped engagement',
+          job: 'Build the evidence and make a decision-ready recommendation.',
           bestFor:
-            'Several people or handoffs, two or more systems, or mistakes that carry real cost. Ready to fund implementation if it is recommended.',
+            'One priority workflow where leadership needs deeper evidence before deciding whether and how to proceed.',
           includes: [
-            'Discovery with everyone involved in the workflow',
             'Current-state workflow map',
-            'Bottlenecks, risks and unofficial workarounds',
-            'Future-state workflow recommendation',
-            'Integration and data ownership assessment',
-            'Success measures you can hold me to',
-            'A scoped implementation recommendation and proposal',
+            'Full Value Case and measurement plan',
+            'AI suitability, risks, permissions and knowledge requirements',
+            'Decision-ready recommendation and prioritised roadmap',
+            'Leadership readout',
           ],
-          note: 'Usually 5 to 7 business days after the discovery sessions.',
+          excludes: [
+            'Production implementation',
+            'An unrestricted whole-company audit',
+            'Ongoing support or guaranteed results',
+          ],
         },
       ],
     },
@@ -324,8 +324,8 @@ export const homeHero = {
   headline: 'Save time, respond faster, and grow with smarter business automation.',
   support:
     'Custom AI and workflow automation for service businesses. Practical solutions built around the tools you already use.',
-  riskLine: 'Practical solutions built around the tools you already use. No obligation workflow review.',
-  priceLine: 'No-cost workflow review · no obligation',
+  riskLine: 'Practical solutions built around the tools you already use. No-obligation opportunity session.',
+  priceLine: 'No-cost AI Opportunity Session · no obligation',
 } as const;
 
 export const homeProblems = [
@@ -341,7 +341,7 @@ export const homeServicesSection = {
   intro:
     'Each engagement starts from a real operational bottleneck, not a technology wishlist. Here is how automation usually helps service businesses.',
   closing:
-    'Not sure what to automate? We will identify the highest-impact opportunity during your workflow review.',
+    'Not sure where AI could help? We will surface the strongest opportunity areas during your AI Opportunity Session.',
 } as const;
 
 export const homeServices = [
@@ -523,7 +523,7 @@ export const homeFaq = [
   {
     question: 'How long does a project take?',
     answer:
-      'The no-cost workflow review is usually about 45 minutes, plus a short written recommendation. Implementation time depends on the workflow. Where possible, Layer starts with one focused first version, then expands once it is in use.',
+      'The no-cost AI Opportunity Session is usually about 45 minutes, followed by a concise written summary. A paid assessment or implementation has its own agreed scope and timing. Layer starts with one focused workflow, then expands only where the evidence supports it.',
   },
   {
     question: 'Is our data secure, and what happens after launch?',
@@ -535,7 +535,7 @@ export const homeFaq = [
 export const homeFinalCta = {
   kicker: 'Next step',
   title: 'Find where work is getting stuck, and whether it is worth fixing.',
-  body: 'The no-cost workflow review maps one process and recommends the highest-value next step, or says so if there is not one. No obligation.',
+  body: 'The no-cost AI Opportunity Session surfaces likely opportunity areas and recommends whether deeper assessment is justified. No obligation.',
 } as const;
 
 /** Kept for How I work / legacy pages that still reference these names. */
@@ -553,9 +553,9 @@ export const homeWaysIHelp = homeServices.map((item) => ({
 
 export const homeOfferSection = {
   kicker: 'Working with Layer',
-  title: 'Start with a no-cost review, then build what is worth fixing.',
+  title: 'Start with a no-cost opportunity session, then investigate what is worth improving.',
   intro:
-    'Most work starts with a no-cost workflow review. If the process is worth fixing, the next step is a scoped implementation, or a technical discovery when more investigation is needed first.',
+    'Most work starts with a no-cost AI Opportunity Session. If deeper evidence is justified, the next step is a paid AI Workflow Assessment before any implementation is agreed.',
 } as const;
 
 export const homeProofSection = {
@@ -598,10 +598,10 @@ export const homeFounderLine = {
 const enquiryBodyLines = [
   'Hello Michael,',
   '',
-  'I would like to book a no-cost workflow review.',
+  'I would like to request an AI Opportunity Audit.',
   '',
   'Business and what we do:',
-  'The workflow that is causing problems:',
+  'The business priority or workflow that is causing problems:',
   'Tools we currently use:',
   '',
   'Thanks,',
@@ -609,10 +609,10 @@ const enquiryBodyLines = [
 
 export const contact = {
   kicker: 'Contact',
-  title: 'Start with a no-cost workflow review.',
+  title: 'Start with an AI Opportunity Audit.',
   intro:
-    'Tell us about one process that is costing time. We will map how it actually runs, find where effort is being lost, and recommend the highest-value next step, or say so if there is not a worthwhile problem.',
-  subject: 'No-cost workflow review',
+    'Tell us where work is getting stuck. We will identify the strongest starting point, the value it could create and the right next step.',
+  subject: 'AI Opportunity Audit',
   bodyLines: enquiryBodyLines,
   helper: 'Answer what you can. A short note about the process is enough to start.',
 } as const;
@@ -750,34 +750,33 @@ export const capabilities = {
 
 export const howIWork = {
   intro:
-    'Every engagement starts with a no-cost review of one real workflow. Further work only begins if that review finds something worth fixing.',
+    'Start with an AI Opportunity Audit to identify where AI could create useful, credible value. If there is a strong opportunity, Layer designs, builds and launches the first workflow as one scoped engagement.',
   fitCheckNote:
-    'The review is not a build. It is enough to decide whether implementation, further discovery, or no work is the right next step.',
+    'After launch, the engagement can end with a complete handover or continue with Layer responsible for monitoring, maintenance and improvement.',
   chooseDiscovery: {
-    title: 'After the no-cost review',
-    intro: 'Which route we recommend depends on how clearly the workflow can be scoped.',
+    title: 'AI Opportunity Audit',
+    intro: 'The audit turns a broad interest in AI into a clear decision about where to start and whether a build is justified.',
     rows: [
-      { signal: 'The process is bounded, the systems are understood, and the work can be estimated', steer: 'Scoped implementation' },
-      { signal: 'Integrations, data, security or exceptions still need investigation before a responsible build', steer: 'Technical discovery' },
-      { signal: 'The process should be simplified before any system is built', steer: 'Change the process first' },
-      { signal: 'There is no worthwhile problem, or the timing is wrong', steer: 'No build' },
+      { signal: 'The strongest operational opportunity', steer: 'Where to start' },
+      { signal: 'Expected value, risks and practical constraints', steer: 'What matters' },
+      { signal: 'A recommended first workflow and delivery scope', steer: 'What to build' },
+      { signal: 'No worthwhile opportunity or the timing is wrong', steer: 'No build' },
     ],
     close:
-      'Technical discovery is not automatic. It is only recommended when the no-cost review is not enough to scope an implementation responsibly.',
+      'A limited number of audits are currently available at no cost to selected businesses. The audit is valuable in its own right and does not commit you to a build.',
   },
   chooseBuild: {
-    title: 'What can follow',
+    title: 'One build. Two paths after launch.',
     rows: [
-      { need: 'Build the recommended first workflow, with controls and a handover', offer: 'Scoped implementation' },
-      { need: 'Investigate access, APIs, data, risk or architecture before a build', offer: 'Technical discovery' },
-      { need: 'Extend a working first workflow across more tools and teams', offer: 'Connected system' },
+      { need: 'Design, integrate, test and launch one controlled workflow', offer: 'AI Workflow Build' },
+      { need: 'Take ownership after stabilisation and documentation', offer: 'Handover to your team' },
+      { need: 'Keep Layer responsible for operational health and improvement', offer: 'AI Workflow Management' },
     ],
   },
   path: [
-    { step: 'No-cost workflow review', detail: 'Map one process as it actually runs, find the friction, and recommend one starting point.' },
-    { step: 'Agreed next step', detail: 'A scoped implementation if the path is clear, or technical discovery if it is not.' },
-    { step: 'Build and demonstrate', detail: 'You see the workflow working against real cases before acceptance.' },
-    { step: 'Handover and improve', detail: 'Documentation, training, and a defect fix period, then support as the work changes.' },
+    { step: 'Audit the opportunity', detail: 'Identify the strongest opportunity, test its value and define a responsible first build.' },
+    { step: 'Design, build and launch', detail: 'Create one production-ready workflow around your tools, controls and ways of working.' },
+    { step: 'Handover or ongoing management', detail: 'Take ownership with documentation and training, or retain Layer to monitor, maintain and improve the workflow.' },
   ],
   nextStepLabel: 'Next step',
 } as const;
@@ -794,9 +793,8 @@ export const featuredProjectSlugs = ['opsdesk-ai'] as const;
 
 export const nav = [
   { label: 'What We Build', href: '/#systems' },
-  { label: 'How It Works', href: '/#what-we-build' },
+  { label: 'How It Works', href: '/#how-we-work' },
   { label: 'About', href: '/about' },
-  { label: 'Work Together', href: '/#how-we-work' },
   { label: 'Contact', href: '/#contact' },
 ] as const;
 
@@ -873,7 +871,7 @@ export const hero = {
   statusPill: 'For selected workflow projects' as const,
   statusChips: [
     'For selected workflow projects',
-    'No-cost workflow review',
+    'AI Opportunity Audit',
     'Intake · automation · approvals',
   ] as const,
   cta: primaryCta,

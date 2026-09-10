@@ -1,0 +1,136 @@
+---
+const integrations = [
+  { name: 'Gmail', image: '/images/integrations/gmail.svg' },
+  { name: 'Microsoft Outlook', image: '/images/integrations/microsoft-outlook.svg' },
+  { name: 'Slack', image: '/images/integrations/slack.svg' },
+  { name: 'Microsoft Teams', image: '/images/integrations/microsoft-teams.svg' },
+  { name: 'Google Drive', image: '/images/integrations/google-drive.svg' },
+  { name: 'Microsoft OneDrive', image: '/images/integrations/microsoft-onedrive.svg' },
+  { name: 'Google Calendar', image: '/images/integrations/google-calendar.svg' },
+  { name: 'Microsoft Excel', image: '/images/integrations/microsoft-excel.svg' },
+  { name: 'Google Sheets', image: '/images/integrations/google-sheets.svg' },
+  { name: 'HubSpot', image: '/images/integrations/hubspot.svg' },
+  { name: 'Salesforce', image: '/images/integrations/salesforce.svg' },
+  { name: 'Pipedrive', image: '/images/integrations/pipedrive.svg' },
+  { name: 'Zoho CRM', image: '/images/integrations/zoho.svg' },
+  { name: 'Intercom', image: '/images/integrations/intercom.svg' },
+  { name: 'Zendesk', image: '/images/integrations/zendesk.svg' },
+  { name: 'Xero', image: '/images/integrations/xero.png' },
+  { name: 'QuickBooks', image: '/images/integrations/quickbooks.svg' },
+  { name: 'Stripe', image: '/images/integrations/stripe.svg' },
+  { name: 'Shopify', image: '/images/integrations/shopify.svg' },
+  { name: 'Square', image: '/images/integrations/square.svg' },
+  { name: 'Asana', image: '/images/integrations/asana.svg' },
+  { name: 'Trello', image: '/images/integrations/trello.svg' },
+  { name: 'monday.com', image: '/images/integrations/monday.svg' },
+  { name: 'ClickUp', image: '/images/integrations/clickup.svg' },
+  { name: 'Jira', image: '/images/integrations/jira.svg' },
+  { name: 'Notion', image: '/images/integrations/notion.svg' },
+  { name: 'Airtable', image: '/images/integrations/airtable.svg' },
+  { name: 'Dropbox', image: '/images/integrations/dropbox.svg' },
+  { name: 'Microsoft SharePoint', image: '/images/integrations/microsoft-sharepoint.svg' },
+  { name: 'DocuSign', image: '/images/integrations/docusign.svg' },
+  { name: 'Google Docs', image: '/images/integrations/google-docs.svg' },
+  { name: 'Microsoft Word', image: '/images/integrations/microsoft-word.svg' },
+  { name: 'Zoom', image: '/images/integrations/zoom.svg' },
+  { name: 'Mailchimp', image: '/images/integrations/mailchimp.svg' },
+  { name: 'WhatsApp', image: '/images/integrations/whatsapp.svg' },
+  { name: 'Zapier', image: '/images/integrations/zapier.svg' },
+] as const;
+
+const integrationRows = Array.from({ length: 4 }, (_, rowIndex) =>
+  integrations.slice(rowIndex * 9, rowIndex * 9 + 9)
+);
+---
+
+<div class="integration-marquee" aria-label="Examples of tools Layer can connect">
+  <div class="integration-marquee__tools">
+    {integrationRows.map((row, rowIndex) => (
+      <div class:list={['integration-marquee__row', { 'integration-marquee__row--reverse': rowIndex % 2 === 1 }]}>
+        <div class="integration-marquee__track">
+          {[0, 1].map((copyIndex) => (
+            <div class="integration-marquee__group" aria-hidden={copyIndex === 1 ? 'true' : undefined}>
+              {row.map((integration) => (
+                <img
+                  src={integration.image}
+                  alt={copyIndex === 0 ? integration.name : ''}
+                  title={copyIndex === 0 ? integration.name : undefined}
+                  loading="lazy"
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .integration-marquee {
+    padding-block: 0.5rem;
+    overflow: hidden;
+    color: var(--layer-navy);
+  }
+
+  .integration-marquee__tools {
+    display: grid;
+    gap: clamp(1rem, 1.8vw, 1.45rem);
+    overflow: hidden;
+    padding-block: 0.2rem;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  }
+
+  .integration-marquee__row { overflow: hidden; }
+
+  .integration-marquee__track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation: integrations-left 38s linear infinite;
+  }
+
+  .integration-marquee__row:nth-child(2) .integration-marquee__track { animation-duration: 42s; }
+  .integration-marquee__row:nth-child(3) .integration-marquee__track { animation-duration: 40s; }
+  .integration-marquee__row:nth-child(4) .integration-marquee__track { animation-duration: 44s; }
+  .integration-marquee__row--reverse .integration-marquee__track { animation-name: integrations-right; }
+
+  .integration-marquee__group {
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: repeat(9, minmax(2.4rem, 1fr));
+    width: min(calc(100vw - 2rem), 92rem);
+    gap: clamp(0.75rem, 1.5vw, 1.15rem);
+  }
+
+  .integration-marquee img {
+    width: 2rem;
+    height: 2rem;
+    justify-self: center;
+    object-fit: contain;
+    filter: saturate(0.88);
+  }
+
+  .integration-marquee:hover .integration-marquee__track,
+  .integration-marquee:focus-within .integration-marquee__track { animation-play-state: paused; }
+
+  @keyframes integrations-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes integrations-right {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+
+  @media (max-width: 780px) {
+    .integration-marquee { padding-block: 0.25rem; }
+    .integration-marquee__tools { gap: 0.9rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .integration-marquee__track { animation: none; }
+  }
+</style>
