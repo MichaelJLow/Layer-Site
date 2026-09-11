@@ -32,7 +32,7 @@ const formClass = variant === 'home' ? 'layer-form' : 'contact-form';
       placeholder="The process, the tools, and what the team is still doing by hand."></textarea>
   </label>
   <button class={`${formClass}__submit`} type="submit">
-    Request a no-cost AI Opportunity Session <span aria-hidden="true">→</span>
+    Request AI Opportunity Audit <span aria-hidden="true">→</span>
   </button>
   <p class={`${formClass}__trust`}>
     <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
@@ -73,7 +73,7 @@ const formClass = variant === 'home' ? 'layer-form' : 'contact-form';
         email: payload.email,
         company: payload.company,
         message: payload.message,
-        _subject: `AI Opportunity Session request from ${payload.company || payload.name}`,
+        _subject: `AI Opportunity Audit request from ${payload.company || payload.name}`,
         _template: 'table',
         _captcha: 'false',
         _replyto: payload.email,

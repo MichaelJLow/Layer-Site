@@ -1,141 +1,89 @@
 ---
 import Layout from '../components/Layout.astro';
 import ContactForm from '../components/ContactForm.astro';
+import IntegrationMarquee from '../components/IntegrationMarquee.astro';
 import { organizationJsonLd, site, websiteJsonLd } from '../config/site';
-
-const pillars = [
-  {
-    slug: 'connect',
-    title: 'Connect',
-    impact: 'Bring the moving parts together.',
-    description:
-      'Connect the tools, data and information your business already depends on so work can move without people constantly copying, searching and re-entering information.',
-    items: ['Tool & API integrations', 'Shared business context', 'Structured information flows'],
-  },
-  {
-    slug: 'coordinate',
-    title: 'Coordinate',
-    impact: 'Move work forward without the chasing.',
-    description: 'Route requests, trigger actions, prepare work and use AI where judgement genuinely helps.',
-    items: ['Workflow orchestration', 'AI-assisted decisions', 'Routing, follow-ups and exceptions'],
-  },
-  {
-    slug: 'control',
-    title: 'Control',
-    impact: 'Keep people in charge where it matters.',
-    description: 'Put approvals, review points, audit trails and clear exception handling around consequential actions.',
-    items: ['Human approval', 'Audit trails & visibility', 'Exceptions & manual override'],
-  },
-];
 
 const steps = [
   {
     number: '01',
     tone: 'understand',
-    title: '01 — Understand',
+    title: 'Audit the opportunity',
     description:
-      'Start with a no-cost structured session to understand the business priority, surface likely opportunities and decide whether deeper investigation is justified.',
-    service: 'AI Opportunity Session',
+      'We review how work moves through your business, identify where AI or automation could create credible value and recommend the strongest first workflow.',
+    service: 'AI Opportunity Audit',
     output:
-      'A paid AI Workflow Assessment maps one priority workflow, its value case, risks and decision-ready next step.',
-    outputLabel: 'When justified',
+      'A clear opportunity map, a recommended starting point and an evidence-led next step.',
+    outputLabel: 'You receive',
     details: {
       lead:
-        'A short, structured starting point that keeps the conversation focused on the business priority rather than the technology.',
+        'A structured review that turns a broad interest in AI into a clear view of where it could create useful, measurable change.',
       fit:
-        'You know an important part of the business could work better, but you do not yet know whether AI, automation or a simpler process change is the right answer.',
+        'Important work is slower, more manual or less reliable than it should be, but the right starting point is not yet clear.',
       includes: [
-        'A focused conversation about the priority, workflow and current friction',
-        'Likely opportunity areas and obvious blockers',
-        'A concise written summary with an honest recommendation on the next step',
+        'A focused review of how work moves through the priority area',
+        'The strongest opportunities, constraints and obvious risks',
+        'A recommended first workflow and the value it should create',
+        'A concise written summary with a practical next step',
       ],
       progression:
-        'If deeper evidence is needed, a paid AI Workflow Assessment maps one priority workflow, builds the Value Case and measurement plan, and produces a decision-ready recommendation.',
+        'If there is a credible opportunity, Layer scopes an AI Workflow Build around the recommended starting point. The audit may also recommend a simpler process change, further investigation or no build.',
       boundary:
-        'The no-cost session is not solution design or implementation. The assessment may recommend implementation, a non-AI improvement, further investigation or no action.',
+        'The audit is focused and bounded. It is not a whole-company transformation programme or a commitment to build. A limited number are currently available at no cost to selected businesses.',
     },
   },
   {
     number: '02',
     tone: 'build',
-    title: '02 — Build',
+    title: 'Design, build & launch',
     description:
-      'Start by redesigning and deploying one important workflow using the right mix of process change, automation, AI, integrations and human judgement. Once it is working and measured, we can extend into further workflows where the evidence supports it.',
-    service: 'AI Workflow Implementation',
-    output: 'A controlled first system and a proven foundation for further implementations.',
-    outputLabel: 'Outcome',
+      'Layer designs the workflow, connects it to the tools your team already uses, builds in the right controls, tests it and launches it into real work.',
+    service: 'AI Workflow Build',
+    output: 'One controlled production workflow, stabilised and ready to operate.',
+    outputLabel: 'You receive',
     details: {
       lead:
-        'A bounded implementation project that improves one important workflow and puts a controlled working system into real use.',
+        'One scoped engagement from workflow design through production launch, focused on delivering a complete working outcome.',
       fit:
-        'The assessment has identified a workflow worth improving, and the intended value, scope, ownership, permissions and acceptance criteria are clear enough to build responsibly.',
+        'The audit has identified a worthwhile first workflow and there is enough clarity about the value, scope, ownership and permissions to build responsibly.',
       includes: [
-        'Workflow redesign around the way the work actually needs to operate',
-        'The minimum appropriate mix of process change, automation, AI and human judgement',
-        'Controls, testing, staged rollout and visible failure handling',
-        'Training, documentation, stabilisation, handover and outcome review',
+        'Workflow design around the way the business actually operates',
+        'Connections to the tools, data and knowledge the work depends on',
+        'The right mix of automation, AI and human judgement',
+        'Permissions, testing, audit trails, manual controls and visible failure handling',
+        'Production launch, stabilisation, documentation and handover',
       ],
       progression:
-        'Layer starts with one clearly bounded workflow. Once it is operating and producing evidence, further workflows can be prioritised and implemented where they create credible value.',
+        'After launch, the client can take ownership of the completed workflow or ask Layer to manage it and expand into further workflows where the evidence supports it.',
       boundary:
-        'Implementation does not imply unlimited support, silent autonomy or guaranteed returns. Ongoing monitoring, support and additional builds are scoped separately where appropriate.',
-    },
-  },
-  {
-    number: '03',
-    tone: 'extend',
-    title: '03 — Extend',
-    description:
-      'Where fragmented or untrusted knowledge is holding a workflow back, establish a trusted, current and permissioned foundation. When evidence supports it, expand into the next priority workflow.',
-    service: 'AI Knowledge Foundation',
-    output: 'Reliable knowledge and further improvements that earn their place through measured value.',
-    outputLabel: 'Outcome',
-    details: {
-      lead:
-        'An assessment-led path for workflows where useful AI is being held back by fragmented, outdated, unowned or unsafe operational knowledge.',
-      fit:
-        'People struggle to find the current answer, important knowledge lives across disconnected sources, or an AI-enabled workflow cannot safely rely on the information available today.',
-      includes: [
-        'A trusted knowledge foundation for one workflow or operational domain',
-        'Clear ownership, permissions, sources and update responsibilities',
-        'Traceable information that remains connected to authoritative business systems',
-        'Client approval over what the organisation treats as company truth',
-      ],
-      progression:
-        'Once the knowledge foundation is dependable, it can support the priority workflow and create a safer base for further implementations.',
-      boundary:
-        'This is not generic document migration, unrestricted enterprise search or a chatbot that silently decides what is true.',
-    },
-  },
-  {
-    number: '04',
-    tone: 'improve',
-    title: '04 — Improve',
-    description:
-      'An ongoing relationship for selected clients who want help prioritising the next opportunities, governing adoption and turning measured results into a coherent AI roadmap.',
-    service: 'AI Enablement Partner',
-    output:
-      'Leadership stays focused on the highest-value next move, with progress, risk and value reviewed over time.',
-    outputLabel: 'Outcome',
-    details: {
-      lead:
-        'A selective ongoing relationship that gives leadership practical support for deciding where AI should go next and making sure adoption remains controlled and valuable.',
-      fit:
-        'You have completed an assessment, have confirmed fit with Layer and want an ongoing partner to help turn individual improvements into a coherent, evidence-led programme.',
-      includes: [
-        'A monthly leadership strategy and prioritisation session',
-        'A monthly working session with the people moving the roadmap forward',
-        'Stewardship of the AI opportunity roadmap',
-        'Regular review of value, risk, controls and adoption',
-        'Bounded research, recommendations and decision support',
-      ],
-      progression:
-        'The relationship is reviewed regularly so that each next initiative earns its place through the Value Case, operating need and evidence from work already completed.',
-      boundary:
-        'Substantial implementation, production operations, incident response, major training and ongoing system monitoring are scoped separately.',
+        'The build covers one agreed workflow. It does not include unlimited revisions, silent autonomy, guaranteed returns or an open-ended support commitment.',
     },
   },
 ];
+
+const managementDetails = {
+  number: '04',
+  tone: 'improve',
+  title: '04 — Optional ongoing service',
+  service: 'AI Workflow Management',
+  details: {
+    lead:
+      'An optional ongoing relationship for clients who want Layer to remain responsible for the operational health of the workflows we build.',
+    fit:
+      'A Layer-built workflow is stable in production and the business wants continued monitoring, maintenance and a measured path to further improvements.',
+    includes: [
+      'Monitoring agreed workflow runs, failures and integration health',
+      'Investigation and recovery support when something stops working',
+      'Maintenance as connected tools and processes change',
+      'Regular review of performance, value, risks and controls',
+      'Further workflow improvements scoped when evidence supports them',
+    ],
+    progression:
+      'Layer starts by keeping the first workflow healthy. Further workflows are prioritised and added through separately agreed phases, allowing a broader connected system to grow around proven value.',
+    boundary:
+      'Management is separately scoped and does not imply 24/7 human coverage, guaranteed uptime, unlimited development or support for systems Layer has not built or formally accepted.',
+  },
+};
 
 const systems = [
   {
@@ -246,8 +194,8 @@ const faqs = [
   {
     question: 'How does a project begin?',
     answer: [
-      'We normally start with a no-cost AI Opportunity Session focused on an important business priority.',
-      'We surface the likely opportunity areas and obvious blockers, then recommend whether a paid AI Workflow Assessment is justified. If it is not, we’ll say so.',
+      'We normally start with an AI Opportunity Audit focused on an important business priority and the way work currently moves through it.',
+      'The audit identifies the strongest opportunity, the obvious constraints and a practical next step. A limited number are currently available at no cost to selected businesses.',
     ],
   },
   {
@@ -268,7 +216,7 @@ const faqs = [
     question: 'How long does a project take?',
     answer: [
       'It depends on the workflow, the systems involved and how much needs to be integrated.',
-      'The Opportunity Session is usually about 45 minutes. If a paid assessment is justified, that produces the evidence needed to give you a realistic view of scope, complexity and timing before you commit to an implementation.',
+      'The AI Opportunity Audit gives us the evidence needed to provide a realistic view of scope, complexity and timing before you commit to a build.',
     ],
   },
 ];
@@ -289,6 +237,32 @@ const serviceJsonLd = {
     url: `${site.url}/about/`,
     sameAs: [site.linkedin],
   },
+  makesOffer: [
+    {
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: 'AI Opportunity Audit',
+        description: 'A structured review to identify the strongest opportunity for AI or automation and the right first workflow.',
+      },
+    },
+    {
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: 'AI Workflow Build',
+        description: 'A scoped engagement covering workflow design, integration, controls, testing and production launch.',
+      },
+    },
+    {
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: 'AI Workflow Management',
+        description: 'Optional ongoing monitoring, maintenance and evidence-led improvement for agreed workflows.',
+      },
+    },
+  ],
 };
 
 const faqJsonLd = {
@@ -313,24 +287,19 @@ const faqJsonLd = {
       <div class="layer-shell layer-hero__inner">
         <div class="layer-hero__copy" data-reveal data-hero-reveal>
           <h1 id="hero-title">
-            <span class="layer-hero__line">
-              <span class="layer-wordmark-inline" aria-label="Layer.">layer<span aria-hidden="true">.</span></span>
-              {' '}builds the systems
-            </span>
-            <span class="layer-hero__line">that connect your team</span>
-            <span class="layer-hero__line">and your tools.</span>
+            <span class="layer-hero__line layer-hero__line--primary">AI systems</span>
+            <span class="layer-hero__line">for growing businesses<span class="layer-hero__period">.</span></span>
           </h1>
           <p class="layer-hero__intro">
-            We help growing businesses identify where AI can create real value, then design and build the systems,
-            workflows and automations that put it to work.
+            We design, build and manage AI agents and automations around the tools your team already uses.
           </p>
           <div class="layer-actions">
             <a class="layer-button layer-button--light" href="#contact">
-              Book a no-cost AI Opportunity Session <span aria-hidden="true">↗</span>
+              Request AI Opportunity Audit <span aria-hidden="true">↗</span>
             </a>
-            <a class="layer-link" href="#systems">Explore what Layer builds <span aria-hidden="true">↓</span></a>
+            <a class="layer-link" href="#systems">See example systems <span aria-hidden="true">↓</span></a>
           </div>
-          <p class="layer-hero__note">No-cost AI Opportunity Session · no obligation</p>
+          <p class="layer-hero__note">Built to run. Designed to be monitored.</p>
         </div>
       </div>
       <div class="layer-shell layer-hero__legend" aria-hidden="true">
@@ -338,134 +307,155 @@ const faqJsonLd = {
       </div>
     </section>
 
-    <section id="what-we-build" class="layer-section layer-builds" aria-labelledby="builds-title">
-      <div class="layer-shell">
-        <header class="layer-section-head layer-section-head--model" data-reveal>
-          <p class="layer-kicker">The operating model</p>
-          <h2 id="builds-title">
-            Connect the tools.<br />
-            Coordinate the work.<br />
-            Keep people in control.
-          </h2>
-          <p>Layer adds the operating layer between your team and the tools you already use.</p>
-        </header>
-        <div class="layer-triptych" data-reveal-stagger>
-          {pillars.map((pillar) => (
-            <article class={`layer-pillar layer-pillar--${pillar.slug}`} data-reveal>
-              <div class="layer-pillar__copy">
-                <h3>{pillar.title}</h3>
-                <p class="layer-pillar__impact">{pillar.impact}</p>
-                <p>{pillar.description}</p>
-              </div>
-              <div class="layer-pillar__examples">
-                <p>Examples</p>
-                <ul>
-                  {pillar.items.map((item) => <li>{item}</li>)}
-                </ul>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-
     <section id="how-we-work" class="layer-section layer-process" aria-labelledby="process-title">
       <div class="layer-shell">
         <header class="layer-section-head layer-process__head" data-reveal>
           <div>
-            <p class="layer-kicker">From friction to flow</p>
-            <h2 id="process-title">
-              Start with one workflow.<br />
-              Build from there.
-            </h2>
+            <p class="layer-kicker">How Layer works</p>
+            <h2 id="process-title">From opportunity to operation.</h2>
           </div>
           <p>
-            Start with the business value and one important workflow. Each next step must earn its place: assessment may
-            lead to implementation, a knowledge foundation, a wider programme—or no build at all.
+            A clear route from identifying the right opportunity to launching a working AI system—and deciding who
+            manages it next.
           </p>
         </header>
-        <ol class="layer-step-grid" data-reveal-stagger>
+        <ol class="layer-offer-steps" data-reveal-stagger>
           {steps.map((step) => (
-            <li class={`layer-step--named layer-step--${step.tone}`} data-reveal>
-              <div class="layer-step__atmosphere" aria-hidden="true">
-                <div class="layer-step__glow"></div>
-              </div>
-              <p class="layer-step__phase">{step.title}</p>
-              <div class="layer-step__mark" aria-hidden="true">
-                {step.tone === 'understand' && (
-                  <svg viewBox="0 0 48 48" fill="none">
-                    <path d="M13 8.5h15.5L35 15v24.5H13V8.5Z" stroke="currentColor" stroke-width="1.4" />
-                    <path d="M28.5 8.5V15H35" stroke="currentColor" stroke-width="1.4" />
-                    <circle cx="23" cy="27" r="6.25" stroke="currentColor" stroke-width="1.4" />
-                    <path d="M27.6 31.6 33.2 37.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
-                  </svg>
-                )}
-                {step.tone === 'build' && (
-                  <svg viewBox="0 0 48 48" fill="none">
-                    <rect x="8" y="22" width="16" height="16" rx="2.2" stroke="currentColor" stroke-width="1.4" />
-                    <rect x="16" y="10" width="16" height="16" rx="2.2" stroke="currentColor" stroke-width="1.4" />
-                    <rect x="24" y="22" width="16" height="16" rx="2.2" stroke="currentColor" stroke-width="1.4" />
-                  </svg>
-                )}
-                {step.tone === 'extend' && (
-                  <svg viewBox="0 0 48 48" fill="none">
-                    <circle cx="12.5" cy="14" r="4.25" stroke="currentColor" stroke-width="1.4" />
-                    <circle cx="35.5" cy="14" r="4.25" stroke="currentColor" stroke-width="1.4" />
-                    <circle cx="24" cy="34.5" r="4.25" stroke="currentColor" stroke-width="1.4" />
-                    <path
-                      d="M16.4 15.6 21.2 31.2M31.6 15.6 26.8 31.2M16.8 14h14.4"
-                      stroke="currentColor"
-                      stroke-width="1.4"
-                    />
-                  </svg>
-                )}
-                {step.tone === 'improve' && (
-                  <svg viewBox="0 0 48 48" fill="none">
-                    <path
-                      d="M34.5 18.2a11.5 11.5 0 1 0 1.8 9.4"
-                      stroke="currentColor"
-                      stroke-width="1.4"
-                      stroke-linecap="round"
-                    />
-                    <path d="M34.5 12.5v8.2h-8.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
-                    <circle cx="24" cy="24.5" r="3.1" stroke="currentColor" stroke-width="1.4" />
-                  </svg>
-                )}
-              </div>
-              <h3>{step.service}</h3>
-              <p>{step.description}</p>
-              <button
-                class="layer-step__more"
-                type="button"
-                data-service-dialog-open={`service-dialog-${step.tone}`}
-                aria-haspopup="dialog"
-                aria-controls={`service-dialog-${step.tone}`}
+            <Fragment>
+              <li
+                class={`layer-offer-card layer-offer-card--${step.tone}`}
+                data-number={step.number}
+                style={`--offer-image-position: ${step.number === '01' ? '0% 0%' : '100% 0%'}`}
+                data-reveal
               >
-                More about this service <span aria-hidden="true">→</span>
-              </button>
-              <div class="layer-step__output">
-                <span>{step.outputLabel || 'Result'}</span>
-                <p>{step.output}</p>
-              </div>
-            </li>
+                <div class="layer-step__atmosphere" aria-hidden="true">
+                  <div class="layer-step__glow"></div>
+                </div>
+                <div class="layer-offer-card__copy">
+                  <div class="layer-step__marker">
+                    <span class="layer-step__badge">Step {step.number}</span>
+                    <p class="layer-step__phase">{step.title}</p>
+                  </div>
+                  <h3>{step.service}</h3>
+                  <p>{step.description}</p>
+                  <div class="layer-offer-card__actions">
+                    <button
+                      class="layer-step__more"
+                      type="button"
+                      data-service-dialog-open={`service-dialog-${step.tone}`}
+                      aria-haspopup="dialog"
+                      aria-controls={`service-dialog-${step.tone}`}
+                    >
+                      More about this service <span aria-hidden="true">→</span>
+                    </button>
+                    {step.number === '01' && (
+                      <a class="layer-button layer-button--primary layer-offer-card__cta" href="#contact">
+                        Request AI Opportunity Audit <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+                <div class="layer-step__output">
+                  <span>{step.outputLabel || 'Result'}</span>
+                  <p>{step.output}</p>
+                </div>
+              </li>
+              {step.number === '01' && (
+                <li class="layer-offer-sequence-link" aria-hidden="true">
+                  <span></span>
+                  <em>Then</em>
+                  <span></span>
+                </li>
+              )}
+            </Fragment>
           ))}
+          <li class="layer-offer-branch" aria-label="After launch, choose how the system is managed">
+            <span class="layer-offer-branch__line" aria-hidden="true"></span>
+            <p class="layer-kicker">After launch</p>
+            <h3>Choose how the system is run.</h3>
+            <p>Take ownership as a completed one-off build, or keep Layer involved to monitor and improve it.</p>
+          </li>
+          <li
+            class="layer-offer-card layer-offer-card--handover"
+            data-number="03"
+            style="--offer-image-position: 0% 100%"
+            data-reveal
+          >
+            <div class="layer-step__atmosphere" aria-hidden="true">
+              <div class="layer-step__glow"></div>
+            </div>
+            <div class="layer-offer-card__copy">
+              <p class="layer-step__phase">03 — One-off path</p>
+              <h3>Handover to your team</h3>
+              <p>
+                Once the workflow is stable, we document it, train the right people and hand it over. No ongoing retainer
+                is required.
+              </p>
+            </div>
+            <div class="layer-step__output">
+              <span>Complete outcome</span>
+              <p>A bounded production workflow your team can own.</p>
+            </div>
+          </li>
+
+          <li
+            class="layer-offer-card layer-offer-card--managed"
+            data-number="04"
+            style="--offer-image-position: 100% 100%"
+            data-reveal
+          >
+            <div class="layer-step__atmosphere" aria-hidden="true">
+              <div class="layer-step__glow"></div>
+            </div>
+            <div class="layer-offer-card__copy">
+              <p class="layer-step__phase">04 — Optional ongoing path</p>
+              <h3>Managed by Layer</h3>
+              <p>
+                We monitor operational health, investigate failures, maintain the agreed workflow and improve it as your
+                tools and processes change.
+              </p>
+              <div class="layer-offer-card__actions">
+                <button
+                  class="layer-step__more"
+                  type="button"
+                  data-service-dialog-open="service-dialog-improve"
+                  aria-haspopup="dialog"
+                  aria-controls="service-dialog-improve"
+                >
+                  More about ongoing management <span aria-hidden="true">→</span>
+                </button>
+                <a class="layer-button layer-button--light layer-offer-card__cta" href="#contact">
+                  Request AI Opportunity Audit <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
+            <div class="layer-step__output">
+              <span>Build from there</span>
+              <p>Further workflows are scoped and added only when the evidence supports them.</p>
+            </div>
+          </li>
+
+          <li class="layer-integrations" data-reveal>
+            <div class="layer-integrations__copy">
+              <div>
+                <p class="layer-kicker">Works with your stack</p>
+                <h3>Built around the tools your team already uses.</h3>
+              </div>
+              <div class="layer-integrations__detail">
+                <p>
+                  Layer connects the systems already running your business, including email, CRM, finance, documents
+                  and internal tools, so useful work can move between them without forcing a platform change.
+                </p>
+                <p class="layer-integrations__note">And the tools specific to your business.</p>
+              </div>
+            </div>
+            <div class="layer-integrations__logos">
+              <IntegrationMarquee />
+            </div>
+          </li>
         </ol>
-        <aside class="layer-review" data-reveal>
-          <div>
-            <p class="layer-kicker">Your first step</p>
-            <h3>Start with a no-cost AI Opportunity Session</h3>
-          </div>
-          <div>
-            <p>
-              We look at your business priority, surface likely opportunity areas and decide whether a paid assessment is
-              justified. You receive a concise written summary and an honest recommendation on the right next step.
-            </p>
-            <a class="layer-button layer-button--primary" href="#contact">
-              Book a no-cost AI Opportunity Session <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </aside>
-        {steps.map((step) => (
+
+        {[...steps, managementDetails].map((step) => (
           <dialog
             id={`service-dialog-${step.tone}`}
             class="layer-service-dialog"
@@ -684,10 +674,10 @@ const faqJsonLd = {
           <p class="layer-kicker">Start a conversation</p>
           <h2 id="contact-title">Where is work getting stuck in your business?</h2>
           <p>
-            Tell us about the business priority or workflow that isn’t working as well as it should. We’ll surface the
-            likely opportunity areas and decide whether deeper assessment is justified.
+            Tell us where work is getting stuck. We’ll use the AI Opportunity Audit to identify the strongest starting
+            point, the value it could create and the right next step.
           </p>
-          <p class="layer-contact__note">No-cost AI Opportunity Session. No obligation.</p>
+          <p class="layer-contact__note">Limited no-cost AI Opportunity Audits available to selected businesses.</p>
         </div>
         <div data-reveal>
           <ContactForm variant="home" />
@@ -989,6 +979,16 @@ const faqJsonLd = {
   .layer-hero__line {
     display: block;
     white-space: nowrap;
+  }
+
+  .layer-hero__line--primary {
+    margin-bottom: 0.08em;
+    font-size: clamp(2.1rem, 6.55vw, 6.75rem);
+    line-height: 0.94;
+  }
+
+  .layer-hero__period {
+    color: var(--hero-period);
   }
 
   .layer-hero h1 .layer-wordmark-inline {
@@ -1521,46 +1521,6 @@ const faqJsonLd = {
     line-height: 1.5;
   }
 
-  .layer-review {
-    display: grid;
-    grid-template-columns: 1fr minmax(22rem, 0.8fr);
-    gap: clamp(3rem, 8vw, 8rem);
-    align-items: start;
-    margin-top: 1rem;
-    padding: clamp(2rem, 4vw, 3.5rem);
-    color: #f4f5f7;
-    background:
-      radial-gradient(circle at 4% 5%, rgba(191, 117, 90, 0.45), transparent 35%),
-      linear-gradient(135deg, #172b47, #1d3557 58%, #354e62);
-    box-shadow: 0 28px 70px rgba(29, 53, 87, 0.18);
-  }
-
-  .layer-review .layer-kicker {
-    color: #e0a07a;
-  }
-
-  .layer-review h3 {
-    max-width: 12ch;
-    margin: 1rem 0 0;
-    font-size: clamp(2.3rem, 4.6vw, 4.8rem);
-    font-weight: 400;
-    line-height: 0.98;
-    letter-spacing: -0.06em;
-  }
-
-  .layer-review > div:last-child > p {
-    margin: 0 0 1.7rem;
-    color: rgba(255, 255, 255, 0.72);
-    font-weight: 300;
-    line-height: 1.7;
-  }
-
-  .layer-review .layer-button--primary {
-    color: var(--layer-navy-deep);
-    background: #f5f3ee;
-    box-shadow: none;
-  }
-
   .layer-service-dialog {
     position: fixed;
     inset: 0 0 0 auto;
@@ -1663,6 +1623,376 @@ const faqJsonLd = {
     font-size: 1.1rem;
     font-weight: 300;
     line-height: 1.7;
+  }
+
+  .layer-process__head h2 {
+    max-width: 13ch;
+    font-size: clamp(2.8rem, 4.4vw, 4.5rem);
+    line-height: 1;
+  }
+
+  .layer-offer-steps {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1rem;
+    margin: clamp(3rem, 6vw, 5.5rem) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .layer-offer-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
+    gap: clamp(2.5rem, 8vw, 8rem);
+    min-height: 25rem;
+    align-items: end;
+    padding: clamp(2rem, 4.5vw, 4.5rem);
+    border: 1px solid rgba(29, 53, 87, 0.13);
+    border-radius: 0.55rem;
+    background: var(--offer-card-background, rgba(250, 249, 246, 0.78));
+    box-shadow: 0 18px 48px rgba(40, 48, 61, 0.07);
+  }
+
+  .layer-offer-steps .layer-offer-card--understand {
+    grid-column: 1 / -1;
+  }
+
+  .layer-offer-steps .layer-offer-card--build {
+    grid-column: 1 / -1;
+  }
+
+  .layer-offer-steps :is(.layer-offer-card--handover, .layer-offer-card--managed) {
+    grid-column: span 6;
+  }
+
+  .layer-offer-sequence-link {
+    grid-column: 1 / -1;
+    display: grid;
+    justify-items: center;
+    gap: 0.45rem;
+    padding: 0.15rem 0;
+  }
+
+  .layer-offer-sequence-link span {
+    width: 1px;
+    height: 1.35rem;
+    background: rgba(29, 53, 87, 0.34);
+  }
+
+  .layer-offer-sequence-link em {
+    color: var(--layer-navy);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .layer-offer-card--handover,
+  .layer-offer-card--managed {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    min-height: 32rem;
+  }
+
+  .layer-offer-card--managed {
+    margin-top: 0;
+  }
+
+  .layer-integrations {
+    grid-column: 1 / -1;
+    padding: clamp(4rem, 7vw, 7rem) clamp(1rem, 4vw, 4rem);
+    overflow: hidden;
+    border-block: 1px solid rgba(29, 53, 87, 0.1);
+    background:
+      linear-gradient(rgba(29, 53, 87, 0.038) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(29, 53, 87, 0.038) 1px, transparent 1px),
+      #f6f3ed;
+    background-size: 2.5rem 2.5rem;
+  }
+
+  .layer-integrations__copy {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(22rem, 0.72fr);
+    gap: clamp(2rem, 9vw, 10rem);
+    align-items: end;
+  }
+
+  .layer-integrations__copy h3 {
+    max-width: 13ch;
+    margin: 0.9rem 0 0;
+    font-size: clamp(2.4rem, 4.35vw, 4.85rem);
+    font-weight: 400;
+    letter-spacing: -0.065em;
+    line-height: 0.94;
+  }
+
+  .layer-integrations__detail > p:first-child {
+    max-width: 34rem;
+    margin: 0;
+    color: var(--layer-muted);
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    font-weight: 300;
+    line-height: 1.65;
+  }
+
+  .layer-integrations__note {
+    margin: 1.5rem 0 0;
+    color: var(--layer-navy);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+  }
+
+  .layer-integrations__logos {
+    margin-top: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .layer-offer-branch {
+    grid-column: 1 / -1;
+    display: grid;
+    justify-items: center;
+    padding: clamp(2.5rem, 5vw, 4.5rem) 1rem clamp(1.5rem, 3vw, 2.5rem);
+    text-align: center;
+  }
+
+  .layer-offer-branch__line {
+    width: 1px;
+    height: clamp(3rem, 6vw, 5rem);
+    margin-bottom: 1.5rem;
+    background: linear-gradient(180deg, rgba(29, 53, 87, 0.08), rgba(29, 53, 87, 0.42));
+  }
+
+  .layer-offer-branch h3 {
+    max-width: 15ch;
+    margin: 0.8rem 0 0;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 400;
+    letter-spacing: -0.06em;
+    line-height: 1;
+  }
+
+  .layer-offer-branch > p:last-child {
+    max-width: 43rem;
+    margin: 1.2rem 0 0;
+    color: var(--layer-muted);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .layer-offer-card::after {
+    content: attr(data-number);
+    position: absolute;
+    z-index: -1;
+    top: -0.16em;
+    right: 0.05em;
+    color: rgba(29, 53, 87, 0.045);
+    font-size: clamp(9rem, 24vw, 22rem);
+    font-weight: 500;
+    letter-spacing: -0.1em;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .layer-offer-card .layer-step__atmosphere {
+    background-image: url('/images/offer-concepts/scientific-imaging-board.png');
+    background-position: var(--offer-image-position);
+    background-size: 200% 200%;
+    opacity: 0.59;
+    filter: saturate(0.42) contrast(0.9);
+    transform: scale(1.01);
+  }
+
+  .layer-offer-card .layer-step__glow {
+    inset: 0;
+    opacity: 1;
+    filter: none;
+    transition: none;
+  }
+
+  .layer-offer-card--understand {
+    --offer-card-background: #e9e4db;
+  }
+
+  .layer-offer-card--understand .layer-step__glow {
+    background:
+      linear-gradient(90deg, rgba(243, 238, 229, 0.96) 0%, rgba(232, 225, 213, 0.82) 46%, rgba(202, 189, 171, 0.18) 66%, rgba(202, 189, 171, 0.04) 100%),
+      linear-gradient(0deg, rgba(232, 225, 214, 0.42), rgba(239, 234, 225, 0.04) 72%);
+  }
+
+  .layer-offer-card--understand .layer-step__atmosphere {
+    opacity: 0.92;
+    filter: saturate(0.72) contrast(1.18);
+  }
+
+  .layer-offer-card--build {
+    --offer-card-background: #bcc7ca;
+  }
+
+  .layer-offer-card--build .layer-step__glow {
+    background:
+      linear-gradient(90deg, rgba(204, 214, 216, 0.96) 0%, rgba(178, 193, 197, 0.82) 46%, rgba(139, 161, 168, 0.16) 66%, rgba(139, 161, 168, 0.03) 100%),
+      linear-gradient(0deg, rgba(177, 192, 196, 0.42), rgba(201, 211, 213, 0.03) 72%);
+  }
+
+  .layer-offer-card--build .layer-step__atmosphere {
+    opacity: 0.9;
+    filter: saturate(0.72) contrast(1.18);
+  }
+
+  .layer-offer-card--handover {
+    --offer-card-background: #536674;
+    color: #fbfaf6;
+  }
+
+  .layer-offer-card--handover .layer-step__glow {
+    background:
+      linear-gradient(90deg, rgba(54, 72, 86, 0.94) 0%, rgba(72, 94, 108, 0.76) 58%, rgba(88, 111, 123, 0.48) 100%),
+      linear-gradient(0deg, rgba(52, 70, 84, 0.72), rgba(82, 103, 116, 0.18) 72%);
+  }
+
+  .layer-offer-card--managed {
+    --offer-card-background: #0d2030;
+    color: #fbfaf6;
+    border-color: rgba(183, 123, 82, 0.25);
+    box-shadow: 0 24px 62px rgba(13, 32, 48, 0.18);
+  }
+
+  .layer-offer-card--managed .layer-step__glow {
+    background:
+      linear-gradient(90deg, rgba(8, 25, 39, 0.96) 0%, rgba(12, 34, 51, 0.8) 58%, rgba(23, 52, 65, 0.5) 100%),
+      linear-gradient(0deg, rgba(8, 25, 39, 0.78), rgba(16, 40, 56, 0.18) 72%);
+  }
+
+  .layer-offer-card--understand :is(.layer-step__phase, .layer-step__output > span),
+  .layer-offer-card--build :is(.layer-step__phase, .layer-step__output > span) {
+    color: #97593c;
+  }
+
+  .layer-offer-card__copy {
+    position: relative;
+    z-index: 1;
+    max-width: 47rem;
+  }
+
+  .layer-step__marker {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .layer-step__badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0.45rem 0.7rem;
+    color: var(--layer-navy-deep);
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(29, 53, 87, 0.58);
+    border-radius: 0.2rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.11em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .layer-step__marker .layer-step__phase {
+    font-size: 0.64rem;
+  }
+
+  .layer-offer-card .layer-step__phase {
+    margin: 0;
+  }
+
+  .layer-offer-card h3 {
+    max-width: 15ch;
+    margin: 0.8rem 0 0;
+    font-size: clamp(2.6rem, 5vw, 5.5rem);
+    font-weight: 400;
+    letter-spacing: -0.06em;
+    line-height: 0.98;
+  }
+
+  .layer-offer-card__copy > p:not(.layer-step__phase) {
+    max-width: 42rem;
+    margin: 1.35rem 0 0;
+    color: var(--layer-muted);
+    font-size: clamp(1rem, 1.45vw, 1.15rem);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .layer-offer-card .layer-step__more {
+    margin: 0;
+  }
+
+  .layer-offer-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.35rem;
+    margin-top: 1.35rem;
+  }
+
+  .layer-offer-card__cta {
+    min-height: 2.8rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.78rem;
+  }
+
+  .layer-offer-card .layer-step__output {
+    position: relative;
+    z-index: 1;
+    min-height: 0;
+    margin-top: 0;
+    padding: 0 0 0 1.5rem;
+    border-top: 0;
+    border-left: 1px solid rgba(29, 53, 87, 0.18);
+  }
+
+  .layer-offer-card .layer-step__output p {
+    margin: 0.6rem 0 0;
+    color: #3f4854;
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.65;
+  }
+
+  .layer-offer-card--handover h3,
+  .layer-offer-card--managed h3 {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+  }
+
+  .layer-offer-card--handover .layer-step__output,
+  .layer-offer-card--managed .layer-step__output {
+    padding: 1.25rem 0 0;
+    border-top: 1px solid rgba(29, 53, 87, 0.18);
+    border-left: 0;
+  }
+
+  :is(.layer-offer-card--handover, .layer-offer-card--managed) :is(.layer-step__phase, .layer-step__output > span),
+  .layer-offer-card--managed .layer-step__more {
+    color: #e1a173;
+  }
+
+  :is(.layer-offer-card--handover, .layer-offer-card--managed) .layer-offer-card__copy > p:not(.layer-step__phase),
+  :is(.layer-offer-card--handover, .layer-offer-card--managed) .layer-step__output p {
+    color: rgba(251, 250, 246, 0.78);
+  }
+
+  :is(.layer-offer-card--handover, .layer-offer-card--managed) .layer-step__output {
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+
+  :is(.layer-offer-card--handover, .layer-offer-card--managed)::after {
+    color: rgba(255, 255, 255, 0.05);
   }
 
   .layer-service-dialog__body > section {
@@ -2326,8 +2656,8 @@ const faqJsonLd = {
     .layer-process__head,
     .layer-systems__head,
     .layer-value__head,
-    .layer-review,
-    .layer-contact__layout {
+    .layer-contact__layout,
+    .layer-integrations__copy {
       grid-template-columns: 1fr;
     }
 
@@ -2335,6 +2665,44 @@ const faqJsonLd = {
     .layer-systems__head,
     .layer-value__head {
       gap: 1.75rem;
+    }
+
+    .layer-offer-steps {
+      grid-template-columns: 1fr;
+    }
+
+    .layer-offer-steps .layer-offer-card {
+      grid-column: auto;
+    }
+
+    .layer-integrations {
+      grid-column: auto;
+      padding-inline: 0;
+    }
+
+    .layer-integrations__copy {
+      gap: 1.75rem;
+      padding-inline: 1rem;
+    }
+
+    .layer-offer-branch {
+      grid-column: auto;
+    }
+
+    .layer-offer-sequence-link {
+      grid-column: auto;
+    }
+
+    .layer-offer-card {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      min-height: 0;
+    }
+
+    .layer-offer-card .layer-step__output {
+      padding: 1.25rem 0 0;
+      border-top: 1px solid rgba(29, 53, 87, 0.18);
+      border-left: 0;
     }
 
     .layer-triptych,
@@ -2356,10 +2724,6 @@ const faqJsonLd = {
 
     .layer-step-grid li {
       min-height: 22rem;
-    }
-
-    .layer-review {
-      gap: 2rem;
     }
 
     .layer-systems__scroller {
@@ -2414,6 +2778,10 @@ const faqJsonLd = {
       font-size: clamp(1.2rem, 6.4vw, 2.35rem);
     }
 
+    .layer-hero__line--primary {
+      font-size: clamp(1.85rem, 9.4vw, 3.1rem);
+    }
+
     .layer-actions {
       align-items: stretch;
       flex-direction: column;
@@ -2432,11 +2800,15 @@ const faqJsonLd = {
       justify-content: center;
     }
 
+    .layer-offer-card,
     .layer-pillar,
     .layer-step-grid li,
-    .layer-system-card__copy,
-    .layer-review {
+    .layer-system-card__copy {
       padding: 1.25rem;
+    }
+
+    .layer-offer-card h3 {
+      font-size: clamp(2.25rem, 12vw, 3.4rem);
     }
 
     .layer-step__output {
