@@ -1821,13 +1821,8 @@ const faqJsonLd = {
 
   .layer-offer-card--understand .layer-step__glow {
     background:
-      linear-gradient(90deg, rgba(243, 238, 229, 0.96) 0%, rgba(232, 225, 213, 0.82) 46%, rgba(202, 189, 171, 0.18) 66%, rgba(202, 189, 171, 0.04) 100%),
-      linear-gradient(0deg, rgba(232, 225, 214, 0.42), rgba(239, 234, 225, 0.04) 72%);
-  }
-
-  .layer-offer-card--understand .layer-step__atmosphere {
-    opacity: 0.92;
-    filter: saturate(0.72) contrast(1.18);
+      linear-gradient(90deg, rgba(243, 238, 229, 0.95) 0%, rgba(232, 225, 213, 0.79) 58%, rgba(202, 189, 171, 0.54) 100%),
+      linear-gradient(0deg, rgba(232, 225, 214, 0.7), rgba(239, 234, 225, 0.2) 72%);
   }
 
   .layer-offer-card--build {
@@ -1836,13 +1831,14 @@ const faqJsonLd = {
 
   .layer-offer-card--build .layer-step__glow {
     background:
-      linear-gradient(90deg, rgba(204, 214, 216, 0.96) 0%, rgba(178, 193, 197, 0.82) 46%, rgba(139, 161, 168, 0.16) 66%, rgba(139, 161, 168, 0.03) 100%),
-      linear-gradient(0deg, rgba(177, 192, 196, 0.42), rgba(201, 211, 213, 0.03) 72%);
+      linear-gradient(90deg, rgba(204, 214, 216, 0.94) 0%, rgba(178, 193, 197, 0.78) 58%, rgba(139, 161, 168, 0.51) 100%),
+      linear-gradient(0deg, rgba(177, 192, 196, 0.72), rgba(201, 211, 213, 0.18) 72%);
   }
 
-  .layer-offer-card--build .layer-step__atmosphere {
-    opacity: 0.9;
-    filter: saturate(0.72) contrast(1.18);
+  .layer-offer-card--understand::after,
+  .layer-offer-card--build::after {
+    z-index: 0;
+    color: rgba(29, 53, 87, 0.11);
   }
 
   .layer-offer-card--handover {
