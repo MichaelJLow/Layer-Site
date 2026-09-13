@@ -1,11 +1,12 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import Layout from '../../components/Layout.astro';
 import { seo } from '../../config/site';
 
 const insights = (await getCollection('insights', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
 );
+const caseStudy = await getEntry('projects', 'instagram-enquiries-to-crm-ready-leads');
 const [featured, ...rest] = insights;
 const formatDate = (date: Date) =>
   date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -19,22 +20,47 @@ const formatDate = (date: Date) =>
     <header class="insights-hero">
       <div class="insights-shell insights-hero__grid">
         <div>
-          <p class="insights-kicker">Insights</p>
+          <p class="insights-kicker">Resources</p>
           <h1>Practical thinking for the work between systems.</h1>
         </div>
         <p>
-          Clear explanations of how applied AI systems work, where automation creates value, and how to keep people in
-          control.
+          Case studies and clear explanations of how applied AI systems work, where automation creates value, and how
+          to keep people in control.
         </p>
       </div>
     </header>
 
-    <section class="insights-library" aria-labelledby="latest-insights">
+    <section class="insights-library" aria-labelledby="latest-resources">
       <div class="insights-shell">
         <div class="insights-library__head">
-          <h2 id="latest-insights">Latest</h2>
-          <p>System explainers, workflow design notes and lessons from building practical AI.</p>
+          <h2 id="latest-resources">Latest resources</h2>
+          <p>Case studies, system explainers, workflow design notes and lessons from building practical AI.</p>
         </div>
+
+        {
+          caseStudy && !caseStudy.data.draft && (
+            <article class="case-study-card">
+              <a class="case-study-card__image" href={`/projects/${caseStudy.slug}`}>
+                <img
+                  src={caseStudy.data.cardImage || caseStudy.data.coverImage || '/images/og-default.jpg'}
+                  alt="Instagram property enquiry moving through Layer into a CRM-ready HubSpot lead"
+                  width="1448"
+                  height="1086"
+                  loading="eager"
+                  decoding="async"
+                />
+              </a>
+              <div class="case-study-card__copy">
+                <p class="insights-kicker">Case study · Real estate lead automation</p>
+                <h3><a href={`/projects/${caseStudy.slug}`}>{caseStudy.data.title}</a></h3>
+                <p>{caseStudy.data.description}</p>
+                <a class="case-study-card__link" href={`/projects/${caseStudy.slug}`}>
+                  Read case study <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          )
+        }
 
         {
           featured ? (
@@ -196,6 +222,71 @@ const formatDate = (date: Date) =>
     font-weight: 300;
     line-height: 1.55;
     text-align: right;
+  }
+
+  .case-study-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--insights-line);
+    border-radius: 0.55rem;
+    background: #fff;
+    box-shadow: 0 18px 48px rgba(29, 53, 87, 0.07);
+  }
+
+  .case-study-card__image {
+    display: block;
+    min-height: 25rem;
+    overflow: hidden;
+    background: #eef1ee;
+  }
+
+  .case-study-card__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .case-study-card__copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(1.75rem, 4vw, 3.5rem);
+  }
+
+  .case-study-card h3 {
+    margin: 1rem 0 0;
+    font-size: clamp(2rem, 3.4vw, 3.4rem);
+    font-weight: 400;
+    letter-spacing: -0.055em;
+    line-height: 1;
+  }
+
+  .case-study-card h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .case-study-card__copy > p:not(.insights-kicker) {
+    margin: 1.35rem 0 0;
+    color: var(--insights-soft);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .case-study-card__link {
+    align-self: start;
+    margin-top: 2rem;
+    color: var(--insights-navy);
+    font-size: 0.84rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .case-study-card__link span {
+    margin-left: 0.4rem;
   }
 
   .insight-feature {
@@ -380,8 +471,14 @@ const formatDate = (date: Date) =>
 
   @media (max-width: 900px) {
     .insights-hero__grid,
-    .insights-series__grid {
+    .insights-series__grid,
+    .case-study-card {
       grid-template-columns: 1fr;
+    }
+
+    .case-study-card__image {
+      min-height: 0;
+      aspect-ratio: 4 / 3;
     }
 
     .insight-grid {

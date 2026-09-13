@@ -12,6 +12,7 @@ const {
   title,
   description,
   descriptionExtra,
+  heroLabel = 'Workflow case study',
   liveUrl,
   liveLabel = 'View live site',
   liveCtaNote,
@@ -42,7 +43,7 @@ const hasRetinaCover =
 <header class="case-study-hero">
   <div class="container-main">
     <div class={`case-study-hero__copy${caseOverview ? ' case-study-hero__copy--overview' : ''}`}>
-      <p class="case-study-hero__label">Workflow case study</p>
+      <p class="case-study-hero__label">{heroLabel}</p>
       <h1>{title}</h1>
 
       {

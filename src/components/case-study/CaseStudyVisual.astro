@@ -1,0 +1,58 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  priority?: boolean;
+  textBreak?: boolean;
+}
+
+const { src, alt, width, height, priority = false, textBreak = false } = Astro.props;
+---
+
+<figure class:list={['case-study-visual', textBreak && 'case-study-visual--text-break']}>
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : 'auto'}
+    decoding="async"
+  />
+</figure>
+
+<style>
+  .case-study-visual {
+    width: min(100%, 72rem);
+    margin: clamp(2.25rem, 6vw, 5rem) auto;
+  }
+
+  .case-study-visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--ml-line);
+    border-radius: 0.55rem;
+    background: #fff;
+    box-shadow: 0 22px 55px rgba(29, 53, 87, 0.1);
+  }
+
+  .case-study-visual--text-break {
+    width: min(100%, 62rem);
+    margin-block: clamp(4rem, 9vw, 8rem);
+  }
+
+  @media (max-width: 640px) {
+    .case-study-visual {
+      width: calc(100% + 1rem);
+      margin-left: -0.5rem;
+    }
+
+    .case-study-visual--text-break {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+</style>

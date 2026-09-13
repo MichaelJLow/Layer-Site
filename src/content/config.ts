@@ -5,6 +5,8 @@ const projectSchema = z.object({
   description: z.string(),
   /** Optional second hero paragraph below description (case study pages). */
   descriptionExtra: z.string().optional(),
+  /** Optional case-study label shown above the hero title. */
+  heroLabel: z.string().optional(),
   date: z.coerce.date(),
   status: z.enum(['Live', 'Built', 'Prototype', 'In Progress', 'Concept']),
   category: z.string(),
