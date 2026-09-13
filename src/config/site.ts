@@ -66,7 +66,7 @@ export const seo = {
       'See how Layer designs operational systems around existing tools, with automation for repetitive work and people kept in control of approvals.',
   },
   insights: {
-    title: 'Resources | Practical Notes and Case Studies on AI Automation',
+    title: 'Insights | Practical Notes and Case Studies on AI Automation',
     description:
       'Case studies and clear explanations of how Layer connects existing tools, automates operational work and keeps human judgement in the loop.',
   },
@@ -794,7 +794,7 @@ export const featuredProjectSlugs = ['instagram-enquiries-to-crm-ready-leads', '
 export const nav = [
   { label: 'What We Build', href: '/#systems' },
   { label: 'How It Works', href: '/#how-we-work' },
-  { label: 'Resources', href: '/insights' },
+  { label: 'Insights', href: '/insights' },
   { label: 'About', href: '/about' },
 ] as const;
 
@@ -803,7 +803,7 @@ export const footerNav = [
   { label: 'How It Works', href: '/how-i-work' },
   { label: 'Work Together', href: '/#how-we-work' },
   { label: 'Case Studies', href: '/projects' },
-  { label: 'Resources', href: '/insights' },
+  { label: 'Insights', href: '/insights' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/#contact' },
   { label: 'Privacy', href: '/privacy' },
