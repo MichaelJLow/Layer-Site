@@ -3,7 +3,10 @@ import { getEntry } from 'astro:content';
 import Layout from '../../components/Layout.astro';
 import { seo } from '../../config/site';
 
+const guide = await getEntry('insights', 'before-you-add-ai');
 const caseStudy = await getEntry('projects', 'instagram-enquiries-to-crm-ready-leads');
+const publishedGuide = guide && !guide.data.draft ? guide : null;
+const publishedCaseStudy = caseStudy && !caseStudy.data.draft ? caseStudy : null;
 ---
 
 <Layout
@@ -31,13 +34,14 @@ const caseStudy = await getEntry('projects', 'instagram-enquiries-to-crm-ready-l
           <p>Case studies, system explainers, workflow design notes and lessons from building practical AI.</p>
         </div>
 
+        <div class="insights-library__cards">
         {
-          caseStudy && !caseStudy.data.draft ? (
+          publishedGuide ? (
             <article class="case-study-card">
-              <a class="case-study-card__image" href={`/projects/${caseStudy.slug}`}>
+              <a class="case-study-card__image" href={`/insights/${publishedGuide.slug}`}>
                 <img
-                  src={caseStudy.data.cardImage || caseStudy.data.coverImage || '/images/og-default.jpg'}
-                  alt="Instagram property enquiry moving through Layer into a CRM-ready HubSpot lead"
+                  src="/images/insights/before-you-add-ai/visual-1.webp"
+                  alt={publishedGuide.data.coverAlt}
                   width="1448"
                   height="1086"
                   loading="eager"
@@ -45,18 +49,48 @@ const caseStudy = await getEntry('projects', 'instagram-enquiries-to-crm-ready-l
                 />
               </a>
               <div class="case-study-card__copy">
+                <p class="insights-kicker">{publishedGuide.data.series}</p>
+                <h3><a href={`/insights/${publishedGuide.slug}`}>{publishedGuide.data.title}</a></h3>
+                <p>{publishedGuide.data.description}</p>
+                <a class="case-study-card__link" href={`/insights/${publishedGuide.slug}`}>
+                  Read article <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          ) : null
+        }
+
+        {
+          publishedCaseStudy ? (
+            <article class="case-study-card">
+              <a class="case-study-card__image" href={`/projects/${publishedCaseStudy.slug}`}>
+                <img
+                  src={publishedCaseStudy.data.cardImage || publishedCaseStudy.data.coverImage || '/images/og-default.jpg'}
+                  alt="Instagram property enquiry moving through Layer into a CRM-ready HubSpot lead"
+                  width="1448"
+                  height="1086"
+                  loading={publishedGuide ? 'lazy' : 'eager'}
+                  decoding="async"
+                />
+              </a>
+              <div class="case-study-card__copy">
                 <p class="insights-kicker">Case study · Real estate lead automation</p>
-                <h3><a href={`/projects/${caseStudy.slug}`}>{caseStudy.data.title}</a></h3>
-                <p>{caseStudy.data.description}</p>
-                <a class="case-study-card__link" href={`/projects/${caseStudy.slug}`}>
+                <h3><a href={`/projects/${publishedCaseStudy.slug}`}>{publishedCaseStudy.data.title}</a></h3>
+                <p>{publishedCaseStudy.data.description}</p>
+                <a class="case-study-card__link" href={`/projects/${publishedCaseStudy.slug}`}>
                   Read case study <span aria-hidden="true">→</span>
                 </a>
               </div>
             </article>
-          ) : (
-            <p>No insights have been published yet.</p>
-          )
+          ) : null
         }
+
+        {
+          !publishedGuide && !publishedCaseStudy ? (
+            <p>No insights have been published yet.</p>
+          ) : null
+        }
+        </div>
       </div>
     </section>
   </main>
@@ -149,10 +183,14 @@ const caseStudy = await getEntry('projects', 'instagram-enquiries-to-crm-ready-l
     text-align: right;
   }
 
+  .insights-library__cards {
+    display: grid;
+    gap: 1rem;
+  }
+
   .case-study-card {
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
-    margin-bottom: 1rem;
     overflow: hidden;
     border: 1px solid var(--insights-line);
     border-radius: 0.55rem;

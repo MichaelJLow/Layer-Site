@@ -63,6 +63,7 @@ const bodyCaption =
           </figure>
         )}
         <slot />
+        {data.disclaimer && <p class="insight-disclaimer">{data.disclaimer}</p>}
       </div>
     </div>
   </article>
@@ -277,6 +278,14 @@ const bodyCaption =
 
   .insight-prose {
     width: min(100%, 47rem);
+  }
+
+  .insight-disclaimer {
+    margin: clamp(3rem, 6vw, 5rem) 0 0;
+    color: var(--insight-muted);
+    font-size: 0.78rem;
+    font-weight: 300;
+    line-height: 1.6;
   }
 
   .insight-prose :global(> p:first-child) {
