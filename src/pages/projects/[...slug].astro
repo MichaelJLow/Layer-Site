@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../components/Layout.astro';
 import CaseStudyHero from '../../components/case-study/CaseStudyHero.astro';
+import ContentClosing from '../../components/ContentClosing.astro';
 import OutcomeList from '../../components/OutcomeList.astro';
 import { featuredProjectSlugs, pageTitle } from '../../config/site';
 
@@ -37,6 +38,16 @@ const isCaseStudy = featuredProjectSlugs.includes(project.slug as (typeof featur
         </div>
       </div>
     </article>
+    {
+      project.data.closing && (
+        <ContentClosing
+          title={project.data.closing.title}
+          body={project.data.closing.body}
+          label={project.data.closing.label}
+          href={project.data.closing.href}
+        />
+      )
+    }
   </div>
 </Layout>
 
@@ -132,7 +143,8 @@ const isCaseStudy = featuredProjectSlugs.includes(project.slug as (typeof featur
     font-weight: 500;
   }
 
-  .project-case-study__article:has(:global(.project-brief__cta-band)) {
+  .project-case-study__article:has(:global(.project-brief__cta-band)),
+  .project-case-study:has(:global(.content-closing)) .project-case-study__article {
     padding-bottom: 0;
   }
 

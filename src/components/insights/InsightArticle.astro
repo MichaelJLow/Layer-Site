@@ -1,21 +1,17 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import ContentClosing from '../ContentClosing.astro';
 
 interface Props {
   insight: CollectionEntry<'insights'>;
   readingMinutes: number;
 }
 
-const { insight, readingMinutes } = Astro.props;
+const { insight } = Astro.props;
 const { data } = insight;
 const seriesLabel = data.seriesNumber
   ? `${data.series} · ${String(data.seriesNumber).padStart(2, '0')}`
   : data.series;
-const published = data.publishedAt.toLocaleDateString('en-GB', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-});
 const railSummary = data.railSummary || data.description;
 const bodyCaption =
   data.bodyImageCaption ||
@@ -27,21 +23,9 @@ const bodyCaption =
 <div class="insight-article">
   <header class="insight-hero">
     <div class="insight-shell">
-      <div class="insight-hero__visual" style={`background-image: url('${data.coverImage}')`}>
-        <div class="insight-hero__visual-wash"></div>
-        <div class="insight-hero__visual-copy">
-          <a class="insight-back" href="/insights">Insights</a>
-          <p>{seriesLabel}</p>
-          <h1>{data.title}</h1>
-          <span>{data.description}</span>
-          <div class="insight-byline">
-            <span>{published}</span>
-            <span>{readingMinutes} min read</span>
-            <span>{data.topic}</span>
-          </div>
-        </div>
-      </div>
-
+      <p class="insight-series">{seriesLabel}</p>
+      <h1>{data.title}</h1>
+      <p class="insight-hero__lede">{data.description}</p>
     </div>
   </header>
 
@@ -63,24 +47,17 @@ const bodyCaption =
           </figure>
         )}
         <slot />
+        {data.disclaimer && <p class="insight-disclaimer">{data.disclaimer}</p>}
       </div>
     </div>
   </article>
 
-  <section class="insight-end" aria-labelledby="insight-end-title">
-    <div class="insight-shell insight-end__grid">
-      <div>
-        <p class="insight-series">Your first step</p>
-        <h2 id="insight-end-title">{data.closing.title}</h2>
-      </div>
-      <div>
-        <p>{data.closing.body}</p>
-        <a class="insight-end__button" href={data.closing.href}>
-          {data.closing.label} <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-    </div>
-  </section>
+  <ContentClosing
+    title={data.closing.title}
+    body={data.closing.body}
+    label={data.closing.label}
+    href={data.closing.href}
+  />
 </div>
 
 <style>
@@ -101,115 +78,39 @@ const bodyCaption =
   }
 
   .insight-hero {
-    padding-block: clamp(4.5rem, 9vw, 8rem) clamp(3.5rem, 7vw, 6rem);
-    background:
-      radial-gradient(circle at 86% 10%, rgba(202, 139, 113, 0.19), transparent 29%),
-      linear-gradient(145deg, #f8f5ef 0%, #eceff0 58%, #e2e7e8 100%);
-  }
-
-  .insight-back {
-    display: inline-flex;
-    margin-bottom: 1rem;
-    color: rgba(255, 255, 255, 0.72);
-    font-size: 0.82rem;
-    text-decoration: none;
-  }
-
-  .insight-back::before {
-    content: '←';
-    margin-right: 0.55rem;
+    padding: clamp(4rem, 8vw, 7.5rem) 0 2.5rem;
+    border-bottom: 1px solid var(--insight-line);
+    background: var(--insight-paper);
   }
 
   .insight-series,
   .insight-rail > p {
     margin: 0;
-    color: var(--insight-navy);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.64rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .insight-byline {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.65rem 1.2rem;
-    margin-top: 2rem;
     color: var(--insight-muted);
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.04em;
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
     text-transform: uppercase;
   }
 
-  .insight-byline span + span {
-    position: relative;
-  }
-
-  .insight-byline span + span::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: -0.65rem;
-    width: 2px;
-    height: 2px;
-    border-radius: 50%;
-    background: currentColor;
-  }
-
-  .insight-hero__visual {
-    position: relative;
-    display: flex;
-    align-items: end;
-    min-height: clamp(25rem, 42vw, 38rem);
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 0.55rem;
-    background-color: #172b47;
-    background-position: center;
-    background-size: cover;
-    box-shadow: 0 28px 70px rgba(29, 53, 87, 0.2);
-  }
-
-  .insight-hero__visual-wash {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 30%, rgba(7, 17, 30, 0.72) 100%);
-  }
-
-  .insight-hero__visual-copy {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    gap: 0.65rem;
-    width: min(100%, 42rem);
-    padding: clamp(1.5rem, 4vw, 3rem);
-    color: #f4f5f7;
-  }
-
-  .insight-hero__visual-copy p {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.62);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .insight-hero__visual-copy h1 {
-    margin: 0;
-    font-size: clamp(2.6rem, 6vw, 6.2rem);
+  .insight-hero h1 {
+    max-width: 920px;
+    margin: 1rem 0 0;
+    color: var(--insight-ink);
+    font-size: clamp(3rem, 7vw, 6.6rem);
     font-weight: 400;
-    letter-spacing: -0.06em;
-    line-height: 0.94;
+    letter-spacing: -0.065em;
+    line-height: 0.95;
     text-wrap: balance;
   }
 
-  .insight-hero__visual-copy span {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.84rem;
-    font-weight: 300;
-    line-height: 1.5;
+  .insight-hero__lede {
+    max-width: 800px;
+    margin: 1.5rem 0 0;
+    color: var(--insight-soft);
+    font-size: clamp(1.1rem, 2vw, 1.42rem);
+    font-weight: 400;
+    line-height: 1.55;
   }
 
   .insight-body__figure {
@@ -238,7 +139,7 @@ const bodyCaption =
   }
 
   .insight-body {
-    padding-block: clamp(4.5rem, 9vw, 8rem);
+    padding-block: clamp(3.5rem, 7vw, 7rem) 0;
   }
 
   .insight-body__grid {
@@ -277,6 +178,14 @@ const bodyCaption =
 
   .insight-prose {
     width: min(100%, 47rem);
+  }
+
+  .insight-disclaimer {
+    margin: clamp(3rem, 6vw, 5rem) 0 0;
+    color: var(--insight-muted);
+    font-size: 0.78rem;
+    font-weight: 300;
+    line-height: 1.6;
   }
 
   .insight-prose :global(> p:first-child) {
@@ -338,63 +247,9 @@ const bodyCaption =
     line-height: 1.55;
   }
 
-  .insight-end {
-    padding-block: clamp(4.5rem, 9vw, 8rem);
-    color: #f4f5f7;
-    background:
-      radial-gradient(circle at 4% 5%, rgba(191, 117, 90, 0.4), transparent 34%),
-      linear-gradient(135deg, #172b47, #1d3557 58%, #354e62);
-  }
-
-  .insight-end__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.72fr);
-    gap: clamp(3rem, 9vw, 9rem);
-    align-items: start;
-  }
-
-  .insight-end .insight-series {
-    color: rgba(255, 255, 255, 0.62);
-  }
-
-  .insight-end h2 {
-    max-width: 13ch;
-    margin: 1rem 0 0;
-    font-size: clamp(2.5rem, 5vw, 5rem);
-    font-weight: 400;
-    letter-spacing: -0.06em;
-    line-height: 0.98;
-  }
-
-  .insight-end__grid > div:last-child > p {
-    margin: 0 0 1.4rem;
-    color: rgba(255, 255, 255, 0.74);
-    font-weight: 300;
-    line-height: 1.7;
-  }
-
-  .insight-end__button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    margin-top: 0.35rem;
-    padding: 0.85rem 1.15rem;
-    border-radius: 0.3rem;
-    color: var(--insight-navy);
-    background: #f5f3ee;
-    font-size: 0.86rem;
-    font-weight: 500;
-    text-decoration: none;
-  }
-
   @media (max-width: 960px) {
-    .insight-body__grid,
-    .insight-end__grid {
+    .insight-body__grid {
       grid-template-columns: 1fr;
-    }
-
-    .insight-back {
-      margin-bottom: 3rem;
     }
 
     .insight-rail {
