@@ -59,6 +59,14 @@ const projectSchema = z.object({
   /** Optional curated related case-study slugs (Related systems). */
   related: z.array(z.string()).max(2).optional(),
   video: z.string().optional(),
+  closing: z
+    .object({
+      title: z.string(),
+      body: z.string(),
+      label: z.string().default('Request an AI Opportunity Audit'),
+      href: z.string().default('/#contact'),
+    })
+    .optional(),
   draft: z.boolean().default(false),
   /** Keep personal/trading case studies out of search while still public on the site. */
   noindex: z.boolean().default(false),
