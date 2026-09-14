@@ -24,6 +24,13 @@ export async function getHomeFeaturedProjects() {
   return getProjectsBySlugs(homeFeaturedProjectSlugs);
 }
 
+export async function getPublishedBuilds() {
+  const builds = await getCollection('builds');
+  return builds
+    .filter((build) => !build.data.draft)
+    .sort((a, b) => a.data.order - b.data.order || b.data.date.valueOf() - a.data.date.valueOf());
+}
+
 export function formatDate(date: Date): string {
   return date.toLocaleDateString('en-GB', {
     year: 'numeric',
@@ -39,3 +46,4 @@ export function readingTime(text: string): string {
 }
 
 export type ProjectEntry = CollectionEntry<'projects'>;
+export type BuildEntry = CollectionEntry<'builds'>;

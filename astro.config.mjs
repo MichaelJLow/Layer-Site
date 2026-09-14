@@ -3,13 +3,20 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-/** Design sandboxes and soft-redirect URLs stay out of the sitemap. */
-const excludedFromSitemap = (page) =>
-  page.includes('/404') ||
-  page.includes('-lab') ||
-  page.includes('/work/') ||
-  page.includes('/systems/') ||
-  page.includes('/capabilities');
+/** Design sandboxes, soft-redirect URLs, and the employer /builds surface stay out of the sitemap. */
+const excludedFromSitemap = (page) => {
+  const path = new URL(page).pathname;
+  return (
+    path.includes('/404') ||
+    path.includes('-lab') ||
+    path.includes('/work/') ||
+    path.includes('/systems/') ||
+    path.includes('/capabilities') ||
+    path === '/builds' ||
+    path === '/builds/' ||
+    path.startsWith('/builds/')
+  );
+};
 
 export default defineConfig({
   site: 'https://www.workwithlayer.com',

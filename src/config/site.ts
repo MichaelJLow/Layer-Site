@@ -79,6 +79,11 @@ export const seo = {
     description:
       'How Layer assembles intake, routing, approvals, connected automation and evaluation into systems growing businesses can run.',
   },
+  builds: {
+    title: 'Selected Builds | Systems designed and operated through Layer',
+    description:
+      'A separate record of systems designed, built and operated through Layer. Not part of the commercial site journey.',
+  },
   notFound: {
     title: 'Page not found | Layer',
   },

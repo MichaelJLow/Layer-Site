@@ -98,7 +98,25 @@ const insightSchema = z.object({
   disclaimer: z.string().optional(),
 });
 
+const buildSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  date: z.coerce.date(),
+  status: z.enum(['Live', 'Built', 'Prototype', 'In Progress', 'Concept']),
+  category: z.string(),
+  order: z.number().default(99),
+  role: z.string(),
+  stack: z.array(z.string()).default([]),
+  proofLine: z.string().optional(),
+  cardImage: z.string().optional(),
+  coverImage: z.string().optional(),
+  videoUrl: z.string().optional(),
+  relatedProject: z.string().optional(),
+  draft: z.boolean().default(false),
+});
+
 export const collections = {
   projects: defineCollection({ type: 'content', schema: projectSchema }),
   insights: defineCollection({ type: 'content', schema: insightSchema }),
+  builds: defineCollection({ type: 'content', schema: buildSchema }),
 };
