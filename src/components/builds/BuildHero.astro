@@ -1,0 +1,158 @@
+---
+import VideoDemo from '../VideoDemo.astro';
+import type { BuildEntry } from '../../utils/content';
+
+interface Props {
+  build: BuildEntry;
+}
+
+const { build } = Astro.props;
+const { title, description, status, category, role, stack, coverImage, videoUrl } = build.data;
+---
+
+<header class="build-hero">
+  <div class="build-hero__shell">
+    <p class="build-hero__kicker">{category}</p>
+    <p class="build-hero__status">{status}</p>
+    <h1>{title}</h1>
+    <p class="build-hero__lede">{description}</p>
+
+    <dl class="build-hero__facts">
+      <div>
+        <dt>Role</dt>
+        <dd>{role}</dd>
+      </div>
+      {
+        stack.length > 0 && (
+          <div>
+            <dt>Stack</dt>
+            <dd>{stack.join(' · ')}</dd>
+          </div>
+        )
+      }
+    </dl>
+
+    {
+      coverImage && (
+        <figure class="build-hero__cover">
+          <img
+            src={coverImage}
+            alt={`${title} cover`}
+            width="1600"
+            height="1000"
+            loading="eager"
+            decoding="async"
+          />
+        </figure>
+      )
+    }
+
+    {videoUrl && <VideoDemo src={videoUrl} title={`${title} walkthrough`} />}
+  </div>
+</header>
+
+<style>
+  .build-hero {
+    padding-block: clamp(5.5rem, 10vw, 8.5rem) clamp(3rem, 6vw, 5rem);
+    background:
+      radial-gradient(ellipse 42% 55% at 8% 12%, rgba(224, 160, 122, 0.22), transparent 62%),
+      radial-gradient(ellipse 38% 48% at 92% 8%, rgba(122, 158, 196, 0.18), transparent 58%),
+      linear-gradient(145deg, #f7f4ee, #e7ebeb);
+  }
+
+  .build-hero__shell {
+    width: min(92rem, calc(100% - 3rem));
+    margin-inline: auto;
+  }
+
+  .build-hero__kicker,
+  .build-hero__status {
+    margin: 0;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .build-hero__kicker {
+    color: var(--builds-navy, #1d3557);
+  }
+
+  .build-hero__status {
+    margin-top: 0.45rem;
+    color: var(--builds-muted, #5c6570);
+  }
+
+  .build-hero h1 {
+    max-width: 16ch;
+    margin: 1.1rem 0 0;
+    font-size: clamp(2.6rem, 6vw, 5.4rem);
+    font-weight: 400;
+    letter-spacing: -0.065em;
+    line-height: 0.96;
+  }
+
+  .build-hero__lede {
+    max-width: 40rem;
+    margin: 1.4rem 0 0;
+    color: var(--builds-soft, #505a66);
+    font-size: clamp(1.02rem, 1.4vw, 1.12rem);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .build-hero__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 1.1rem 2rem;
+    max-width: 42rem;
+    margin: 1.75rem 0 0;
+  }
+
+  .build-hero__facts dt {
+    color: var(--builds-muted, #5c6570);
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .build-hero__facts dd {
+    margin: 0.25rem 0 0;
+    color: var(--builds-ink, #12151a);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .build-hero__cover {
+    width: min(100%, 72rem);
+    margin: clamp(2rem, 5vw, 3.5rem) 0 0;
+  }
+
+  .build-hero__cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid rgba(29, 53, 87, 0.14);
+    border-radius: 0.55rem;
+    background: #fff;
+    box-shadow: 0 22px 55px rgba(29, 53, 87, 0.1);
+  }
+
+  .build-hero :global(.my-8) {
+    max-width: 72rem;
+    margin: clamp(2rem, 5vw, 3.5rem) 0 0;
+  }
+
+  @media (max-width: 560px) {
+    .build-hero__shell {
+      width: min(100% - 2rem, 92rem);
+    }
+
+    .build-hero h1 {
+      max-width: none;
+    }
+  }
+</style>

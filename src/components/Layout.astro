@@ -13,6 +13,8 @@ interface Props {
   ogImageAlt?: string;
   /** Keep design sandboxes and utility routes out of search results. */
   noindex?: boolean;
+  /** Exact robots directive. When set, used as-is and does not change lab/noindex behaviour. */
+  robots?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   ogType?: 'website' | 'article';
   publishedTime?: string;
@@ -25,6 +27,7 @@ const {
   ogImage = '/images/og-default.jpg',
   ogImageAlt = `${site.brand} | ${site.practice}`,
   noindex = false,
+  robots,
   jsonLd,
   ogType = 'website',
   publishedTime,
@@ -39,6 +42,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
 
 /** Design sandboxes live at /*-lab and are never indexed. */
 const hideFromSearch = noindex || Astro.url.pathname.includes('-lab');
+const robotsContent = robots ?? (hideFromSearch ? 'noindex, nofollow' : undefined);
 
 const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
@@ -50,7 +54,7 @@ const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="author" content={site.founder} />
-    {hideFromSearch && <meta name="robots" content="noindex, nofollow" />}
+    {robotsContent && <meta name="robots" content={robotsContent} />}
     <link rel="canonical" href={canonicalURL} />
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.brand} />

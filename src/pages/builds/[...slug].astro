@@ -1,0 +1,182 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import BuildHero from '../../components/builds/BuildHero.astro';
+import { pageTitle } from '../../config/site';
+
+export async function getStaticPaths() {
+  const builds = await getCollection('builds');
+  return builds
+    .filter((build) => !build.data.draft)
+    .map((build) => ({
+      params: { slug: build.slug },
+      props: { build },
+    }));
+}
+
+const { build } = Astro.props;
+const { Content } = await render(build);
+const { title, description, relatedProject } = build.data;
+---
+
+<Layout
+  title={pageTitle(title)}
+  description={description}
+  ogImage={build.data.coverImage}
+  robots="noindex, follow"
+>
+  <div class="build-page">
+    <BuildHero build={build} />
+    <article class="build-page__article">
+      <div class="build-page__body">
+        <div class="build-page__content">
+          <Content />
+        </div>
+        {
+          relatedProject && (
+            <p class="build-page__related">
+              <a href={`/projects/${relatedProject}`}>Commercial Layer case study</a>
+            </p>
+          )
+        }
+        <p class="build-page__back">
+          <a href="/builds">All selected builds</a>
+        </p>
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<style>
+  .build-page {
+    --builds-ink: #12151a;
+    --builds-navy: #1d3557;
+    --builds-muted: #5c6570;
+    --builds-soft: #505a66;
+    --builds-line: rgba(29, 53, 87, 0.14);
+    background: #f6f4ef;
+    color: var(--builds-ink);
+    max-width: 100%;
+    overflow-x: clip;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  }
+
+  .build-page__article {
+    padding-block: clamp(3.5rem, 7vw, 7rem);
+  }
+
+  .build-page__body {
+    width: min(92rem, calc(100% - 3rem));
+    margin-inline: auto;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .build-page__content {
+    color: var(--builds-soft);
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .build-page__content :global(> h2),
+  .build-page__content :global(> h3),
+  .build-page__content :global(> p),
+  .build-page__content :global(> ul),
+  .build-page__content :global(> ol),
+  .build-page__content :global(> figure),
+  .build-page__content :global(> pre),
+  .build-page__content :global(> blockquote) {
+    width: min(100%, 46rem);
+    margin-inline: auto;
+  }
+
+  .build-page__content :global(> h2) {
+    margin-top: clamp(4.5rem, 8vw, 8rem);
+    margin-bottom: 1.25rem;
+    color: var(--builds-ink);
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 400;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .build-page__content :global(> h2:first-child) {
+    margin-top: 0;
+  }
+
+  .build-page__content :global(> h3) {
+    margin-top: 2.5rem;
+    margin-bottom: 0.65rem;
+    color: var(--builds-ink);
+    font-size: 1.15rem;
+    font-weight: 500;
+  }
+
+  .build-page__content :global(> p),
+  .build-page__content :global(> li) {
+    font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+    font-weight: 300;
+    line-height: 1.78;
+  }
+
+  .build-page__content :global(> p + p) {
+    margin-top: 1rem;
+  }
+
+  .build-page__content :global(> ul),
+  .build-page__content :global(> ol) {
+    margin-top: 1.25rem;
+    padding-left: 1.25rem;
+  }
+
+  .build-page__content :global(> ul li),
+  .build-page__content :global(> ol li) {
+    margin-top: 0.55rem;
+    line-height: 1.65;
+  }
+
+  .build-page__content :global(img) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--builds-line);
+    border-radius: 0.55rem;
+    background: #fff;
+  }
+
+  .build-page__content :global(a) {
+    color: var(--builds-navy);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .build-page__content :global(strong) {
+    color: var(--builds-ink);
+    font-weight: 500;
+  }
+
+  .build-page__related,
+  .build-page__back {
+    width: min(100%, 46rem);
+    margin: 2.5rem auto 0;
+    font-size: 0.9rem;
+  }
+
+  .build-page__related a,
+  .build-page__back a {
+    color: var(--builds-navy);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .build-page__back {
+    margin-top: 1.25rem;
+    color: var(--builds-muted);
+  }
+
+  @media (max-width: 560px) {
+    .build-page__body {
+      width: min(100% - 2rem, 92rem);
+    }
+  }
+</style>
