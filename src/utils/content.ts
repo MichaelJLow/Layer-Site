@@ -1,6 +1,5 @@
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
-import { featuredProjectSlugs, homeFeaturedProjectSlugs } from '../config/site';
 
 export async function getPublishedProjects() {
   const projects = await getCollection('projects');
@@ -9,19 +8,19 @@ export async function getPublishedProjects() {
     .sort((a, b) => a.data.order - b.data.order || b.data.date.valueOf() - a.data.date.valueOf());
 }
 
-async function getProjectsBySlugs(slugs: readonly string[]) {
-  const projects = await getPublishedProjects();
-  return slugs
-    .map((slug) => projects.find((project) => project.slug === slug))
-    .filter((project): project is CollectionEntry<'projects'> => Boolean(project));
-}
-
 export async function getFeaturedProjects() {
-  return getProjectsBySlugs(featuredProjectSlugs);
+  const projects = await getPublishedProjects();
+  return projects.filter((project) => project.data.featured);
 }
 
-export async function getHomeFeaturedProjects() {
-  return getProjectsBySlugs(homeFeaturedProjectSlugs);
+export async function getPublishedInsights() {
+  const insights = await getCollection('insights');
+  return insights
+    .filter((entry) => !entry.data.draft)
+    .sort((a, b) => {
+      if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+      return b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf();
+    });
 }
 
 export async function getPublishedBuilds() {
@@ -46,4 +45,5 @@ export function readingTime(text: string): string {
 }
 
 export type ProjectEntry = CollectionEntry<'projects'>;
+export type InsightEntry = CollectionEntry<'insights'>;
 export type BuildEntry = CollectionEntry<'builds'>;

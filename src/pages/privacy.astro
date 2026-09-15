@@ -3,7 +3,7 @@ import Layout from '../components/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import { site, seo } from '../config/site';
 
-const updated = 'August 2026';
+const updated = 'September 2026';
 
 const sections = [
   {
@@ -17,8 +17,8 @@ const sections = [
   {
     title: 'When you email me',
     paragraphs: [
-      `If you request an AI Opportunity Session, the details you submit are sent to ${site.email} so we can respond. I keep that correspondence, and the details you choose to share about your business and workflow, so I can reply and, if useful, quote for later work.`,
-      'Enquiry and client details are recorded in my CRM (HubSpot) for the purpose of managing the enquiry and any engagement that follows. They are not used for unrelated marketing lists.',
+      `If you request an AI Opportunity Audit, the details you submit are sent to ${site.email} so we can respond. Delivery uses Resend, a first-party email provider. I keep that correspondence, and the details you choose to share about your business and workflow, so I can reply and, if useful, quote for later work.`,
+      'Enquiry and client details are recorded in my CRM (HubSpot) for the purpose of managing the enquiry and any engagement that follows. They are not used for unrelated marketing lists, and they are not sent to third-party form processors.',
       'You can ask me to delete your enquiry details at any time by replying to the email thread.',
     ],
   },
@@ -51,7 +51,7 @@ const sections = [
     <PageHeader
       label="Privacy"
       title="What this site collects"
-      subtitle="Short version: cookie free, aggregated analytics, and whatever you choose to tell me in an email."
+      subtitle="Short version: cookie free, aggregated analytics, and whatever you choose to tell me in an enquiry."
       compact
     />
 

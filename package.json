@@ -1,17 +1,23 @@
 {
-  "name": "michael-low-portfolio",
+  "name": "layer-site",
   "type": "module",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=22 <25"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "typecheck": "tsc --noEmit",
+    "check:links": "node scripts/check-published-links.mjs",
+    "test": "npm run check:links",
+    "ci": "npm run build && npm run typecheck && npm run check:links"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.0",
-    "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.3.0",
     "@tailwindcss/vite": "^4.1.4",
     "@vercel/analytics": "^2.0.1",

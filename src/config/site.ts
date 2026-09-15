@@ -719,6 +719,7 @@ export const capabilities = {
       outcome:
         'The tools you already pay for stop needing a human to copy data between them, with errors surfaced rather than silent.',
       evidence: 'Standard integrations across email, sheets, CRM, scheduling and payments.',
+      caseStudy: '/projects/instagram-enquiries-to-crm-ready-leads',
       tier: 'Starter or Connected',
     },
     {
@@ -726,7 +727,6 @@ export const capabilities = {
       outcome:
         'Scattered documents, notes and decisions become something a team can search and reuse instead of asking someone again.',
       evidence: 'Knowledge and research pipelines built for daily use.',
-      caseStudy: '/projects/ai-daily-pulse',
       tier: 'Connected or Controlled Pilot',
     },
     {
@@ -734,7 +734,6 @@ export const capabilities = {
       outcome:
         'Information is gathered, summarised and surfaced on a schedule, so decisions do not wait on someone checking ten sources.',
       evidence: 'Signal and briefing systems running against live sources.',
-      caseStudy: '/projects/macro-signal-room',
       tier: 'Connected or Controlled Pilot',
     },
   ],
@@ -790,15 +789,9 @@ export const howIWork = {
  * Featured work
  * ------------------------------------------------------------------ */
 
-/** Homepage: OpsDesk demonstration as the lean proof block. */
-export const homeFeaturedProjectSlugs = ['opsdesk-ai'] as const;
-
-/** Case Studies index and case-study routing. */
-export const featuredProjectSlugs = ['instagram-enquiries-to-crm-ready-leads', 'opsdesk-ai'] as const;
-
 export const nav = [
   { label: 'What We Build', href: '/#systems' },
-  { label: 'How It Works', href: '/#how-we-work' },
+  { label: 'How It Works', href: '/how-i-work' },
   { label: 'Insights', href: '/insights' },
   { label: 'About', href: '/about' },
 ] as const;

@@ -1,22 +1,13 @@
 ---
-import { getEntry } from 'astro:content';
 import Layout from '../../components/Layout.astro';
 import { seo } from '../../config/site';
-import { readingTime } from '../../utils/content';
+import { getPublishedInsights, getPublishedProjects, readingTime } from '../../utils/content';
 
-const guide = await getEntry('insights', 'before-you-add-ai');
-const caseStudy = await getEntry('projects', 'instagram-enquiries-to-crm-ready-leads');
-const publishedGuide = guide && !guide.data.draft ? guide : null;
-const publishedCaseStudy = caseStudy && !caseStudy.data.draft ? caseStudy : null;
-
-const guideHref = publishedGuide ? `/insights/${publishedGuide.slug}` : '';
-const caseHref = publishedCaseStudy ? `/projects/${publishedCaseStudy.slug}` : '';
-const guideMeta = publishedGuide
-  ? `${publishedGuide.data.series} · ${publishedGuide.data.topic} · ${readingTime(publishedGuide.body)}`
-  : '';
-const caseMeta = publishedCaseStudy
-  ? `Case study · ${publishedCaseStudy.data.category} · ${publishedCaseStudy.data.status} · ${readingTime(publishedCaseStudy.body)}`
-  : '';
+const insights = await getPublishedInsights();
+const caseStudies = await getPublishedProjects();
+const [lead, ...otherInsights] = insights;
+const leadHref = lead ? `/insights/${lead.slug}` : '';
+const leadMeta = lead ? `${lead.data.series} · ${lead.data.topic} · ${readingTime(lead.body)}` : '';
 ---
 
 <Layout
@@ -40,12 +31,12 @@ const caseMeta = publishedCaseStudy
     <section class="insights-index" aria-label="Published insights">
       <div class="insights-shell">
         {
-          publishedGuide ? (
+          lead ? (
             <article class="insights-lead">
-              <a class="insights-lead__image" href={guideHref}>
+              <a class="insights-lead__image" href={leadHref}>
                 <img
-                  src="/images/insights/before-you-add-ai/visual-1.webp"
-                  alt="Diagram of a request moving through reliable execution, intelligence and human judgment before a completed document"
+                  src={lead.data.coverImage}
+                  alt={lead.data.coverAlt}
                   width="1448"
                   height="1086"
                   loading="eager"
@@ -54,11 +45,11 @@ const caseMeta = publishedCaseStudy
                 />
               </a>
               <div class="insights-lead__copy">
-                <p class="insights-meta">{guideMeta}</p>
-                <h2><a href={guideHref}>{publishedGuide.data.title}</a></h2>
-                <p class="insights-standfirst">{publishedGuide.data.description}</p>
-                <a class="insights-more" href={guideHref}>
-                  Read guide <span aria-hidden="true">→</span>
+                <p class="insights-meta">{leadMeta}</p>
+                <h2><a href={leadHref}>{lead.data.title}</a></h2>
+                <p class="insights-standfirst">{lead.data.description}</p>
+                <a class="insights-more" href={leadHref}>
+                  {lead.data.series === 'Guide' ? 'Read guide' : 'Read article'} <span aria-hidden="true">→</span>
                 </a>
               </div>
             </article>
@@ -66,33 +57,62 @@ const caseMeta = publishedCaseStudy
         }
 
         {
-          publishedCaseStudy ? (
-            <article class="insights-case">
-              <p class="insights-case__label">Case study</p>
-              <a class="insights-case__image" href={caseHref}>
-                <img
-                  src={publishedCaseStudy.data.cardImage || publishedCaseStudy.data.coverImage || '/images/og-default.jpg'}
-                  alt="Instagram property enquiry moving through Layer into a CRM-ready HubSpot lead"
-                  width="1448"
-                  height="1086"
-                  loading={publishedGuide ? 'lazy' : 'eager'}
-                  decoding="async"
-                />
-              </a>
-              <div class="insights-case__copy">
-                <p class="insights-meta">{caseMeta}</p>
-                <h2><a href={caseHref}>{publishedCaseStudy.data.title}</a></h2>
-                <p class="insights-standfirst">{publishedCaseStudy.data.description}</p>
-                <a class="insights-more" href={caseHref}>
-                  Read case study <span aria-hidden="true">→</span>
-                </a>
-              </div>
-            </article>
+          otherInsights.length > 0 ? (
+            <ul class="insights-list">
+              {otherInsights.map((insight) => {
+                const href = `/insights/${insight.slug}`;
+                return (
+                  <li>
+                    <article class="insights-row">
+                      <p class="insights-meta">
+                        {insight.data.series} · {insight.data.topic} · {readingTime(insight.body)}
+                      </p>
+                      <h2><a href={href}>{insight.data.title}</a></h2>
+                      <p class="insights-standfirst">{insight.data.description}</p>
+                      <a class="insights-more" href={href}>
+                        Read article <span aria-hidden="true">→</span>
+                      </a>
+                    </article>
+                  </li>
+                );
+              })}
+            </ul>
           ) : null
         }
 
         {
-          !publishedGuide && !publishedCaseStudy ? (
+          caseStudies.map((study) => {
+            const href = `/projects/${study.slug}`;
+            return (
+              <article class="insights-case">
+                <p class="insights-case__label">Case study</p>
+                <a class="insights-case__image" href={href}>
+                  <img
+                    src={study.data.cardImage || study.data.coverImage || '/images/og-default.jpg'}
+                    alt={study.data.title}
+                    width="1448"
+                    height="1086"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+                <div class="insights-case__copy">
+                  <p class="insights-meta">
+                    Case study · {study.data.category} · {study.data.status} · {readingTime(study.body)}
+                  </p>
+                  <h2><a href={href}>{study.data.title}</a></h2>
+                  <p class="insights-standfirst">{study.data.description}</p>
+                  <a class="insights-more" href={href}>
+                    Read case study <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </article>
+            );
+          })
+        }
+
+        {
+          insights.length === 0 && caseStudies.length === 0 ? (
             <p>No insights have been published yet.</p>
           ) : null
         }
@@ -253,6 +273,41 @@ const caseMeta = publishedCaseStudy
     margin-left: 0.4rem;
   }
 
+  .insights-list {
+    list-style: none;
+    margin: clamp(2.5rem, 4vw, 3.5rem) 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+  }
+
+  .insights-row {
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--insights-line);
+  }
+
+  .insights-row h2 {
+    margin: 0.55rem 0 0;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: clamp(1.35rem, 2vw, 1.85rem);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1.12;
+  }
+
+  .insights-row h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .insights-row .insights-standfirst {
+    margin-top: 0.75rem;
+  }
+
+  .insights-row .insights-more {
+    margin-top: 0.85rem;
+  }
+
   .insights-case {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
@@ -278,7 +333,8 @@ const caseMeta = publishedCaseStudy
   }
 
   .insights-lead a:focus-visible,
-  .insights-case a:focus-visible {
+  .insights-case a:focus-visible,
+  .insights-row a:focus-visible {
     outline: 2px solid var(--insights-navy);
     outline-offset: 3px;
   }

@@ -1,44 +1,55 @@
-# Michael Low — Portfolio
+# Layer marketing site
 
-Personal portfolio site built with Astro, Tailwind CSS, and MDX Content Collections.
+Public marketing site for [Layer](https://www.workwithlayer.com), built with Astro, Tailwind CSS, and MDX.
 
 ## Stack
 
 - [Astro 5](https://astro.build)
 - Tailwind CSS 4
-- MDX for case studies and build log
+- MDX content collections
 - Deployed on Vercel
 
 ## Development
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:4321](http://localhost:4321).
+Open [http://localhost:4321](http://localhost:4321). Node 22–24 is required (`engines` in `package.json`; Vercel production uses 24.x).
 
-## Build
+## Build and checks
 
 ```bash
 npm run build
-npm run preview
+npm run typecheck
+npm run check:links
 ```
+
+`npm run ci` runs build, typecheck, and the published-link check. Pull requests also run this in GitHub Actions.
+
+Design sandboxes (`*-lab` routes) are available in `astro dev` and are omitted from the production build. `/builds` stays off the primary navigation and out of the sitemap.
 
 ## Content
 
-Add projects in `src/content/projects/` and build log posts in `src/content/build-log/`.
+- Case studies: `src/content/projects/`
+- Insights: `src/content/insights/`
+- Selected builds (unlisted): `src/content/builds/`
 
-Update current focus in `src/content/now/index.md`.
+Mark unpublished case studies with `draft: true`. The production build does not emit draft canonical routes, lab pages, or links to unpublished slugs.
 
-## Headshot (About page)
+## Contact mailer
 
-1. Use a square or portrait photo (at least 400×400px).
-2. Save as `public/images/headshot.png` (or `.jpg` / `.webp`).
-3. Refresh `/about` — the placeholder shows until the file exists.
+The enquiry form posts only to `api/contact.js`. Production needs `RESEND_API_KEY` and `RESEND_FROM` set (values stay in Vercel; do not commit them). There is no third-party form fallback.
 
-Optional: change the path in `src/config/site.ts` → `site.headshot`.
+## Rollback
 
-## Deploy
+Production deploys on Vercel from `main`.
 
-Push to GitHub and connect to Vercel. Set production domain in `astro.config.mjs` (`site` field).
+1. Open the Vercel project → **Deployments**.
+2. Find the previous production deployment in `READY` state.
+3. Use **Instant Rollback** / promote that deployment to production.
+
+If GitHub `main` should also move back, revert the merge commit and push. The Vercel rollback can be done first so the live site does not wait on the Git revert.
+
+The extra `*.vercel.app` production alias is a platform default. Custom domains are `www.workwithlayer.com` and the host redirects in `vercel.json`.
