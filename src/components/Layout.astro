@@ -45,6 +45,8 @@ const hideFromSearch = noindex || Astro.url.pathname.includes('-lab');
 const robotsContent = robots ?? (hideFromSearch ? 'noindex, nofollow' : undefined);
 
 const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const serializeJsonLd = (block: Record<string, unknown>) =>
+  JSON.stringify(block).replace(/</g, '\\u003c').replace(/>/g, '\\u003e');
 ---
 
 <!doctype html>
@@ -86,7 +88,7 @@ const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     />
     {
       jsonLdBlocks.map((block) => (
-        <script type="application/ld+json" set:html={JSON.stringify(block)} />
+        <script type="application/ld+json" set:html={serializeJsonLd(block)} />
       ))
     }
     <title>{title}</title>
