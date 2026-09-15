@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { build } = Astro.props;
-const { title, description, status, category, role, stack, coverImage, videoUrl } = build.data;
+const { title, description, status, category, role, stack, proofLine, coverImage, videoUrl } = build.data;
 ---
 
 <header class="build-hero">
@@ -27,6 +27,14 @@ const { title, description, status, category, role, stack, coverImage, videoUrl 
           <div>
             <dt>Stack</dt>
             <dd>{stack.join(' · ')}</dd>
+          </div>
+        )
+      }
+      {
+        proofLine && (
+          <div class="build-hero__proof">
+            <dt>Production proof</dt>
+            <dd>{proofLine}</dd>
           </div>
         )
       }
@@ -124,6 +132,10 @@ const { title, description, status, category, role, stack, coverImage, videoUrl 
     font-size: 0.95rem;
     line-height: 1.45;
     overflow-wrap: anywhere;
+  }
+
+  .build-hero__proof {
+    grid-column: 1 / -1;
   }
 
   .build-hero__cover {

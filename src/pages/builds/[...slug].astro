@@ -85,8 +85,18 @@ const { title, description, relatedProject } = build.data;
   .build-page__content :global(> ol),
   .build-page__content :global(> figure),
   .build-page__content :global(> pre),
-  .build-page__content :global(> blockquote) {
+  .build-page__content :global(> blockquote),
+  .build-page__content :global(> .build-callout) {
     width: min(100%, 46rem);
+    margin-inline: auto;
+  }
+
+  .build-page__content :global(> figure.build-visual--wide) {
+    width: min(100%, 72rem);
+  }
+
+  .build-page__content :global(> .build-ops) {
+    width: min(100%, 80rem);
     margin-inline: auto;
   }
 
@@ -126,6 +136,7 @@ const { title, description, relatedProject } = build.data;
   .build-page__content :global(> ul),
   .build-page__content :global(> ol) {
     margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
     padding-left: 1.25rem;
   }
 
