@@ -1,0 +1,129 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  health: string;
+  metrics: string;
+  runs: string;
+  context: string;
+}
+
+const { src, alt, width, height, health, metrics, runs, context } = Astro.props;
+
+const annotations = [
+  { id: '01', title: 'Health checks', body: health },
+  { id: '02', title: 'Current metrics', body: metrics },
+  { id: '03', title: 'Technical runs', body: runs },
+  { id: '04', title: 'Operations context', body: context },
+];
+---
+
+<section class="build-ops" aria-label="Real operations view">
+  <div class="build-ops__grid">
+    <figure class="build-ops__shot">
+      <img
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+
+    <ol class="build-ops__notes">
+      {
+        annotations.map((item) => (
+          <li class="build-ops__card">
+            <p class="build-ops__index">{item.id}</p>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .build-ops {
+    width: min(100%, 80rem);
+    margin: clamp(2.25rem, 6vw, 4.5rem) auto;
+  }
+
+  .build-ops__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(16.5rem, 0.7fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .build-ops__shot {
+    margin: 0;
+    min-width: 0;
+  }
+
+  .build-ops__shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid rgba(29, 53, 87, 0.14);
+    border-radius: 0.55rem;
+    background: #111;
+    box-shadow: 0 18px 48px rgba(18, 21, 26, 0.16);
+  }
+
+  .build-ops__notes {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .build-ops__card {
+    padding: 1rem 1.05rem 1.05rem;
+    border: 1px solid rgba(29, 53, 87, 0.12);
+    border-radius: 0.5rem;
+    background: #f7f6f2;
+    box-shadow: none;
+  }
+
+  .build-ops__index {
+    margin: 0;
+    color: #1d3557;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+  }
+
+  .build-ops__card h3 {
+    margin: 0.35rem 0 0;
+    color: #1d3557;
+    font-size: 0.98rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .build-ops__card p:last-child {
+    margin: 0.45rem 0 0;
+    color: #1d3557;
+    font-size: 0.86rem;
+    font-weight: 300;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 860px) {
+    .build-ops__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .build-ops__shot {
+      width: 100%;
+    }
+  }
+</style>
