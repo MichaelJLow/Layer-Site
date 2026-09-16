@@ -16,7 +16,7 @@ export async function getStaticPaths() {
 
 const { build } = Astro.props;
 const { Content } = await render(build);
-const { title, description, relatedProject } = build.data;
+const { title, description } = build.data;
 ---
 
 <Layout
@@ -32,15 +32,11 @@ const { title, description, relatedProject } = build.data;
         <div class="build-page__content">
           <Content />
         </div>
-        {
-          relatedProject && (
-            <p class="build-page__related">
-              <a href={`/projects/${relatedProject}`}>Commercial Layer case study</a>
-            </p>
-          )
-        }
         <p class="build-page__back">
-          <a href="/builds">All selected builds</a>
+          <a href="/builds">
+            <span aria-hidden="true">←</span>
+            Back to all selected builds
+          </a>
         </p>
       </div>
     </article>
@@ -54,6 +50,8 @@ const { title, description, relatedProject } = build.data;
     --builds-muted: #5c6570;
     --builds-soft: #505a66;
     --builds-line: rgba(29, 53, 87, 0.14);
+    --builds-shell: min(76rem, calc(100% - 3rem));
+    --builds-copy: 43rem;
     background: #f6f4ef;
     color: var(--builds-ink);
     max-width: 100%;
@@ -62,11 +60,11 @@ const { title, description, relatedProject } = build.data;
   }
 
   .build-page__article {
-    padding-block: clamp(3.5rem, 7vw, 7rem);
+    padding-block: clamp(4rem, 7vw, 6.5rem) clamp(3rem, 6vw, 5rem);
   }
 
   .build-page__body {
-    width: min(92rem, calc(100% - 3rem));
+    width: var(--builds-shell);
     margin-inline: auto;
     max-width: 100%;
     min-width: 0;
@@ -87,24 +85,24 @@ const { title, description, relatedProject } = build.data;
   .build-page__content :global(> pre),
   .build-page__content :global(> blockquote),
   .build-page__content :global(> .build-callout) {
-    width: min(100%, 46rem);
-    margin-inline: auto;
+    width: min(100%, var(--builds-copy));
+    margin-inline: 0 auto;
   }
 
   .build-page__content :global(> figure.build-visual--wide) {
-    width: min(100%, 72rem);
+    width: min(100%, 60rem);
   }
 
   .build-page__content :global(> .build-ops) {
-    width: min(100%, 80rem);
-    margin-inline: auto;
+    width: 100%;
+    margin-inline: 0;
   }
 
   .build-page__content :global(> h2) {
-    margin-top: clamp(4.5rem, 8vw, 8rem);
-    margin-bottom: 1.25rem;
+    margin-top: clamp(4.25rem, 7vw, 6.5rem);
+    margin-bottom: 1.15rem;
     color: var(--builds-ink);
-    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-size: clamp(2rem, 3.5vw, 3rem);
     font-weight: 400;
     letter-spacing: -0.05em;
     line-height: 1;
@@ -114,23 +112,29 @@ const { title, description, relatedProject } = build.data;
     margin-top: 0;
   }
 
+  .build-page__content :global(> h2#outcome) {
+    margin-top: clamp(4.5rem, 8vw, 7rem);
+    padding-top: clamp(2rem, 4vw, 3rem);
+    border-top: 1px solid var(--builds-line);
+  }
+
   .build-page__content :global(> h3) {
-    margin-top: 2.5rem;
+    margin-top: 2.25rem;
     margin-bottom: 0.65rem;
     color: var(--builds-ink);
-    font-size: 1.15rem;
+    font-size: 1.08rem;
     font-weight: 500;
   }
 
   .build-page__content :global(> p),
   .build-page__content :global(> li) {
-    font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+    font-size: clamp(1rem, 1.2vw, 1.075rem);
     font-weight: 300;
-    line-height: 1.78;
+    line-height: 1.72;
   }
 
   .build-page__content :global(> p + p) {
-    margin-top: 1rem;
+    margin-top: 0.9rem;
   }
 
   .build-page__content :global(> ul),
@@ -166,28 +170,44 @@ const { title, description, relatedProject } = build.data;
     font-weight: 500;
   }
 
-  .build-page__related,
   .build-page__back {
-    width: min(100%, 46rem);
-    margin: 2.5rem auto 0;
-    font-size: 0.9rem;
+    width: min(100%, var(--builds-copy));
+    margin: clamp(3.5rem, 7vw, 6rem) 0 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--builds-line);
   }
 
-  .build-page__related a,
   .build-page__back a {
-    color: var(--builds-navy);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.85rem 1rem;
+    color: #fff;
+    background: var(--builds-navy);
+    border: 1px solid var(--builds-navy);
+    border-radius: 0.35rem;
+    font-size: 0.88rem;
     font-weight: 500;
     text-decoration: none;
+    transition: transform 180ms ease, box-shadow 180ms ease;
   }
 
-  .build-page__back {
-    margin-top: 1.25rem;
-    color: var(--builds-muted);
+  .build-page__back a:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 9px 20px rgba(29, 53, 87, 0.18);
   }
 
   @media (max-width: 560px) {
+    .build-page {
+      --builds-shell: min(100% - 2rem, 76rem);
+    }
+
     .build-page__body {
-      width: min(100% - 2rem, 92rem);
+      width: var(--builds-shell);
+    }
+
+    .build-page__content :global(> h2) {
+      margin-top: 4rem;
     }
   }
 </style>
