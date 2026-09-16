@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import { readdir, rm, stat } from 'node:fs/promises';
+import { readdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -37,24 +37,20 @@ function omitLabPagesFromBuild() {
     hooks: {
       'astro:build:done': async ({ dir }) => {
         const root = fileURLToPath(dir);
-        async function walk(folder) {
-          let entries = [];
-          try {
-            entries = await readdir(folder);
-          } catch {
-            return;
-          }
-          for (const name of entries) {
-            const path = join(folder, name);
-            const info = await stat(path);
-            if (name.includes('-lab')) {
-              await rm(path, { recursive: true, force: true });
-              continue;
-            }
-            if (info.isDirectory()) await walk(path);
+        let entries = [];
+        try {
+          entries = await readdir(root);
+        } catch {
+          return;
+        }
+
+        for (const name of entries) {
+          // Lab routes are all top-level pages. Restrict cleanup to those route
+          // outputs so shared, hashed assets in /_astro are never removed.
+          if (name.includes('-lab')) {
+            await rm(join(root, name), { recursive: true, force: true });
           }
         }
-        await walk(root);
       },
     },
   };

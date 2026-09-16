@@ -12,32 +12,32 @@ const { title, description, status, category, role, stack, proofLine, coverImage
 
 <header class="build-hero">
   <div class="build-hero__shell">
-    <p class="build-hero__kicker">{category}</p>
-    <p class="build-hero__status">{status}</p>
-    <h1>{title}</h1>
-    <p class="build-hero__lede">{description}</p>
+    <div class="build-hero__heading">
+      <div class="build-hero__eyebrow">
+        <p class="build-hero__kicker">{category}</p>
+        <p class="build-hero__status"><span aria-hidden="true"></span>{status}</p>
+      </div>
+      <h1>{title}</h1>
+      <p class="build-hero__lede">{description}</p>
+    </div>
 
     <dl class="build-hero__facts">
-      <div>
+      <div class="build-hero__fact">
         <dt>Role</dt>
         <dd>{role}</dd>
       </div>
-      {
-        stack.length > 0 && (
-          <div>
-            <dt>Stack</dt>
-            <dd>{stack.join(' · ')}</dd>
-          </div>
-        )
-      }
-      {
-        proofLine && (
-          <div class="build-hero__proof">
-            <dt>Production proof</dt>
-            <dd>{proofLine}</dd>
-          </div>
-        )
-      }
+      {stack.length > 0 && (
+        <div class="build-hero__fact">
+          <dt>Stack</dt>
+          <dd>{stack.join(' · ')}</dd>
+        </div>
+      )}
+      {proofLine && (
+        <div class="build-hero__proof">
+          <dt>First six live days</dt>
+          <dd>{proofLine}</dd>
+        </div>
+      )}
     </dl>
 
     {
@@ -61,7 +61,7 @@ const { title, description, status, category, role, stack, proofLine, coverImage
 
 <style>
   .build-hero {
-    padding-block: clamp(5.5rem, 10vw, 8.5rem) clamp(3rem, 6vw, 5rem);
+    padding-block: clamp(4.5rem, 8vw, 7rem);
     background:
       radial-gradient(ellipse 42% 55% at 8% 12%, rgba(224, 160, 122, 0.22), transparent 62%),
       radial-gradient(ellipse 38% 48% at 92% 8%, rgba(122, 158, 196, 0.18), transparent 58%),
@@ -69,8 +69,19 @@ const { title, description, status, category, role, stack, proofLine, coverImage
   }
 
   .build-hero__shell {
-    width: min(92rem, calc(100% - 3rem));
+    width: min(76rem, calc(100% - 3rem));
     margin-inline: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(17rem, 0.62fr);
+    column-gap: clamp(3rem, 7vw, 6.5rem);
+    align-items: end;
+  }
+
+  .build-hero__eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem 1.2rem;
   }
 
   .build-hero__kicker,
@@ -88,22 +99,31 @@ const { title, description, status, category, role, stack, proofLine, coverImage
   }
 
   .build-hero__status {
-    margin-top: 0.45rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
     color: var(--builds-muted, #5c6570);
   }
 
+  .build-hero__status span {
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 50%;
+    background: #27734f;
+  }
+
   .build-hero h1 {
-    max-width: 16ch;
-    margin: 1.1rem 0 0;
-    font-size: clamp(2.6rem, 6vw, 5.4rem);
+    max-width: 13ch;
+    margin: 1.25rem 0 0;
+    font-size: clamp(3rem, 6vw, 5.25rem);
     font-weight: 400;
     letter-spacing: -0.065em;
     line-height: 0.96;
   }
 
   .build-hero__lede {
-    max-width: 40rem;
-    margin: 1.4rem 0 0;
+    max-width: 38rem;
+    margin: 1.5rem 0 0;
     color: var(--builds-soft, #505a66);
     font-size: clamp(1.02rem, 1.4vw, 1.12rem);
     font-weight: 300;
@@ -112,10 +132,13 @@ const { title, description, status, category, role, stack, proofLine, coverImage
 
   .build-hero__facts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-    gap: 1.1rem 2rem;
-    max-width: 42rem;
-    margin: 1.75rem 0 0;
+    gap: 1.4rem;
+    margin: 0;
+  }
+
+  .build-hero__fact {
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(29, 53, 87, 0.14);
   }
 
   .build-hero__facts dt {
@@ -129,16 +152,20 @@ const { title, description, status, category, role, stack, proofLine, coverImage
   .build-hero__facts dd {
     margin: 0.25rem 0 0;
     color: var(--builds-ink, #12151a);
-    font-size: 0.95rem;
-    line-height: 1.45;
+    font-size: 0.9rem;
+    line-height: 1.5;
     overflow-wrap: anywhere;
   }
 
   .build-hero__proof {
-    grid-column: 1 / -1;
+    padding: 1rem 1.05rem;
+    border: 1px solid rgba(29, 53, 87, 0.14);
+    border-radius: 0.4rem;
+    background: rgba(255, 255, 255, 0.42);
   }
 
   .build-hero__cover {
+    grid-column: 1 / -1;
     width: min(100%, 72rem);
     margin: clamp(2rem, 5vw, 3.5rem) 0 0;
   }
@@ -158,13 +185,46 @@ const { title, description, status, category, role, stack, proofLine, coverImage
     margin: clamp(2rem, 5vw, 3.5rem) 0 0;
   }
 
-  @media (max-width: 560px) {
+  @media (max-width: 800px) {
     .build-hero__shell {
-      width: min(100% - 2rem, 92rem);
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 2.75rem;
+    }
+
+    .build-hero h1 {
+      max-width: 14ch;
+    }
+
+    .build-hero__facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .build-hero__proof {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .build-hero {
+      padding-block: 3.75rem;
+    }
+
+    .build-hero__shell {
+      width: min(100% - 2rem, 76rem);
     }
 
     .build-hero h1 {
       max-width: none;
+      font-size: clamp(2.75rem, 13vw, 4rem);
+    }
+
+    .build-hero__facts {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .build-hero__proof {
+      grid-column: auto;
     }
   }
 </style>
