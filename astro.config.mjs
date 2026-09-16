@@ -68,6 +68,16 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        output: {
+          assetFileNames: (assetInfo) =>
+            (assetInfo.names ?? [assetInfo.name ?? '']).some((name) => name.endsWith('.css'))
+              ? '_astro/[hash][extname]'
+              : '_astro/[name].[hash][extname]',
+        },
+      },
+    },
   },
   markdown: {
     shikiConfig: {
