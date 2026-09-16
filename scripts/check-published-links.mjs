@@ -102,6 +102,7 @@ for (const slug of insights.published) {
 }
 
 const hrefPattern = /href="([^"]+)"/g;
+const stylesheetPattern = /<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"/g;
 const seen = new Set();
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
@@ -110,6 +111,16 @@ for (const file of htmlFiles) {
   }
   if (html.includes('never shared')) {
     errors.push(`${relative(root, file)} still claims information is never shared`);
+  }
+  for (const match of html.matchAll(stylesheetPattern)) {
+    const href = match[1];
+    if (href.includes('-lab')) {
+      errors.push(`${relative(root, file)} references lab-named production stylesheet ${href}`);
+    }
+    const stylesheet = join(distDir, href.replace(/^\//, ''));
+    if (!(await stat(stylesheet).catch(() => null))) {
+      errors.push(`${relative(root, file)} references missing stylesheet ${href}`);
+    }
   }
   let match;
   while ((match = hrefPattern.exec(html))) {
