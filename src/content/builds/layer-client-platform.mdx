@@ -1,13 +1,154 @@
 ---
-title: Layer Client Platform
-description: Placeholder for the employer-facing Layer Client Platform write-up. The case study is not written yet.
-date: 2026-09-14
+title: Building the platform behind Layer’s production AI workflows
+description: A platform for connecting client tools, controlling access, and operating production workflows from one environment.
+date: 2026-09-17
 status: In Progress
-category: Selected build
+category: Platform engineering · Workflow infrastructure
 order: 2
-role: To be written
-stack: []
+role: Product architecture · System design · Implementation · Security model · Production operations
+stack:
+  - Next.js
+  - TypeScript
+  - WorkOS
+  - Supabase
+  - Composio
+  - Inngest
+  - Vercel
+cardImage: /images/builds/layer-client-platform/layer-client-platform-architecture.png
 draft: false
 ---
 
-This page is a routing and layout stub. The employer-facing Layer Client Platform case study has not been written.
+import BuildVisual from '../../components/builds/BuildVisual.astro';
+
+## Why I built it
+
+Layer started with individual client workflows.
+
+As I built more of them, I found myself repeating the same work around every implementation: connecting the tools a workflow needed, storing the right configuration, testing against the correct environment, deploying changes, checking whether the system was still running and reconstructing what had happened when something failed.
+
+The automation itself was only part of the job. Every workflow also needed a dependable way to be onboarded, operated and recovered once it left development.
+
+I wanted one place to manage that whole lifecycle.
+
+The Layer Client Platform gives me a consistent way to onboard a client environment, let the right person authenticate the systems a workflow needs, and then operate the workflow without rebuilding its surrounding infrastructure each time.
+
+The client-facing surface is intentionally small. Clients mainly use it when I need them to connect or re-authenticate one of their tools. The operating side is for Layer: configuring workflows, testing them in context, activating them, monitoring their health and investigating problems.
+
+That separation keeps the client experience lightweight while giving me the control needed to take responsibility for a production system.
+
+## What I owned
+
+I designed and built the platform around the full operating lifecycle of a client workflow.
+
+That included client onboarding, authentication and connection management, workspace configuration, workflow registration, background execution, health checks, failure handling and the operational tooling I use after deployment.
+
+I also defined the boundaries between the services involved. Authentication, client context, durable state, provider connections and asynchronous execution are related concerns, but they do not need to become one undifferentiated application.
+
+The platform was shaped by implementation pressure rather than designed as an abstract infrastructure project. When a live workflow exposed a gap—duplicate processing, an ambiguous external write or a health signal I could not trust—I could improve the shared operating foundation instead of solving the same class of problem inside one workflow.
+
+## The platform architecture
+
+<BuildVisual
+  src="/images/builds/layer-client-platform/layer-client-platform-architecture.png"
+  alt="Layer Client Platform architecture diagram showing a user authenticating through WorkOS into the Layer app, Supabase enforcing workspace boundaries, personal or company connection ownership, Composio linking client tools, Inngest running jobs and recovery, and Layer Operations monitoring health, runs and incidents"
+  width={1672}
+  height={941}
+  caption="Architecture diagram of the Layer Client Platform and the responsibilities of its core services. It is not a production interface screenshot."
+  priority
+/>
+
+The architecture separates the responsibilities needed to run a workflow reliably.
+
+WorkOS handles authentication and session identity. Layer resolves the client environment and workspace context the user or workflow is operating inside. Supabase and Postgres hold durable application state, connection metadata, workflow configuration and execution state.
+
+Composio provides the integration layer between Layer and the tools a business uses. Those connections can include systems such as HubSpot, Gmail, Slack, Google Drive and Instagram, but the platform is not built around a fixed provider list. Layer owns the context around a connection; Composio handles the provider authentication and access beneath it.
+
+Inngest handles asynchronous execution, schedules, health checks and recovery work. Layer Operations sits across the workflow layer and gives me one place to inspect health, recent runs and unresolved failures.
+
+The goal was not to pull every function into one product. It was to make each responsibility explicit so the whole system remains understandable when a workflow crosses several providers.
+
+## Client access without another system to manage
+
+I did not want clients to learn a new operations product simply so I could automate work inside tools they already use.
+
+When a workflow needs access to a system such as HubSpot or Instagram, the client authenticates that account through Layer. Composio handles the provider flow, while Layer records which client environment the connection belongs to and what depends on it.
+
+Once the connection is active, I can work with it from the operational side of the platform. If it expires or is revoked, the platform can send the client back through the relevant authentication step without exposing the rest of the workflow infrastructure.
+
+This creates a repeatable onboarding path without asking somebody to share a password, manually create long-lived credentials or become an administrator of the automation system.
+
+## Identity and operating context
+
+WorkOS and Layer answer different questions.
+
+WorkOS establishes who has authenticated and provides the session identity. Layer determines which client and workspace that person is acting inside, which connections belong there and which workflow configuration can use them.
+
+Keeping that operating context explicit matters because a technically valid provider connection is not automatically the right connection. A workflow must run against the intended client environment, with the intended configuration and access—not whichever account happens to be available.
+
+Those boundaries are enforced below the interface rather than depending on what the UI happens to display. The aim is not to build an elaborate permissions product. It is to keep access predictable and make accidental cross-environment use harder as the platform grows.
+
+## Connection ownership and state
+
+External accounts do not all have the same relationship to a business.
+
+Some connections are naturally tied to an individual. Others belong to the company and need to remain available to a long-running workflow regardless of who originally authorised them. The platform keeps that ownership context alongside the connection so workflow code does not treat every authenticated account as interchangeable.
+
+Connection state is explicit too. A connection can be active, expired, failed, disabled or revoked, and each state has a different operational meaning.
+
+An expired connection may need re-authentication. A disabled connection has been deliberately taken out of use. A failed connection needs investigation. A revoked connection should no longer be treated as an available dependency.
+
+Modelling those distinctions turns “the integration is not working” into a more useful diagnosis. It also gives the operating layer enough information to guide the next action rather than hiding every provider problem behind the same generic error.
+
+## A workflow has an operating lifecycle
+
+I did not want workflows to become scripts that were deployed somewhere and then assumed to be healthy.
+
+Layer uses an explicit lifecycle:
+
+**Define → Instrument → Activate → Health-check → Alert → Recover**
+
+A workflow starts with a defined purpose, dependencies and expected behaviour. Before activation, it needs enough instrumentation to make its state understandable. Activation then happens against a specific client environment and configuration.
+
+Once live, Layer Operations brings together dependency health, scheduler state, recent runs, retries and failures. Recoverable work can retry or reconcile automatically where that is safe. Work that cannot be recovered automatically remains visible for investigation.
+
+For example, if a CRM request times out after it has been sent, immediately repeating it could create a duplicate record. The safer path is to preserve the workflow state, check whether the original write succeeded and only repeat the operation when the result can be reconciled safely.
+
+The objective is not a dashboard full of green checks. It is a trustworthy view of what is running, what changed, what failed and where I need to intervene.
+
+## Shaped by a live workflow
+
+One production implementation takes incoming Instagram enquiries, collects and validates the required information, then creates the appropriate Contact and Deal in HubSpot.
+
+Operating it exposed requirements that a happy-path prototype would not: authenticated client connections, durable state, duplicate safeguards, controlled AI fallback, safe external writes, scheduled health checks and somewhere for failures to become visible.
+
+Those requirements fed back into the platform. They are why connection state, workflow state and recovery behaviour are platform concerns rather than details left to each implementation.
+
+The workflow also showed why monitoring needs business context. A quiet Instagram account and a broken provider connection are different states; the platform keeps that distinction concise here because the full production evidence belongs in [the Instagram-to-HubSpot build](/builds/instagram-enquiries-to-crm-ready-leads).
+
+The platform exists because those operating problems exist. The live workflow made them concrete.
+
+## Engineering quality as an operating signal
+
+A platform responsible for production workflows needs stronger feedback than knowing the application builds on one machine.
+
+The repository uses TypeScript and linting as baseline checks, with Vitest covering unit and database or authorisation behaviour and Playwright exercising important end-to-end flows. Production builds are part of the same feedback loop.
+
+At one point, the existing test baseline had become unreliable. Rather than continue building on feedback I could no longer trust, I restored the green baseline and added required CI checks around future changes.
+
+That work reinforced the same lesson as production monitoring: a health signal is useful only when I can trust it.
+
+The engineering decisions I would repeat follow from that principle. Keep client context explicit. Treat external connections as part of the platform model. Make failure visible. Retry only when the underlying action can be repeated safely. Require operational visibility before calling a workflow production-ready. Keep customer conversations and credentials out of telemetry where they are not needed.
+
+The AI model may be important inside an individual workflow, but it is only one component. Authenticated access, durable state, controlled execution, monitoring and recovery determine whether the overall system remains understandable after deployment.
+
+## Where the platform is today
+
+The Layer Client Platform now gives me one environment for onboarding client connections, configuring workflows, testing them in context, running them in production and intervening when something goes wrong.
+
+It provides the shared infrastructure around those workflows: authenticated access, client-specific configuration, durable state, background execution, health monitoring and bounded recovery.
+
+One live production workflow is already operated through that model. The platform remains in progress and continues to evolve from the problems I encounter while running real systems; I am not presenting it as a finished multi-client product or using capability as a substitute for evidence.
+
+The value is straightforward:
+
+I can deliver the next client workflow without rebuilding the operating layer around it from scratch.
