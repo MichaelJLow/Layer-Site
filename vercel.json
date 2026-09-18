@@ -39,12 +39,32 @@
     },
     {
       "source": "/work",
-      "destination": "/how-i-work",
+      "destination": "/#how-we-work",
       "permanent": true
     },
     {
       "source": "/work/",
-      "destination": "/how-i-work",
+      "destination": "/#how-we-work",
+      "permanent": true
+    },
+    {
+      "source": "/how-i-work",
+      "destination": "/#how-we-work",
+      "permanent": true
+    },
+    {
+      "source": "/how-i-work/",
+      "destination": "/#how-we-work",
+      "permanent": true
+    },
+    {
+      "source": "/how-it-works",
+      "destination": "/#how-we-work",
+      "permanent": true
+    },
+    {
+      "source": "/how-it-works/",
+      "destination": "/#how-we-work",
       "permanent": true
     },
     {

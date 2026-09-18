@@ -8,7 +8,9 @@ import { fileURLToPath } from 'node:url';
 
 /** Keep path redirects in sync with the hosting table in vercel.json. */
 export const pathRedirects = {
-  '/work': '/how-i-work',
+  '/work': '/#how-we-work',
+  '/how-i-work': '/#how-we-work',
+  '/how-it-works': '/#how-we-work',
   '/systems/invoiceflow-ap': '/insights/invoice-processing-automation',
   '/insights/invoice-and-document-processing': '/insights/invoice-processing-automation',
   '/insights/opsdesk-shared-inbox-control': '/insights/shared-inbox-routing-and-approval',
@@ -23,6 +25,10 @@ const excludedFromSitemap = (page) => {
     path.includes('/404') ||
     path.includes('-lab') ||
     path.includes('/work/') ||
+    path === '/how-i-work' ||
+    path === '/how-i-work/' ||
+    path === '/how-it-works' ||
+    path === '/how-it-works/' ||
     path.includes('/systems/') ||
     path.includes('/capabilities') ||
     path === '/builds' ||

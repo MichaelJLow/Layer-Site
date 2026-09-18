@@ -110,6 +110,8 @@ const buildSchema = z.object({
   proofLine: z.string().optional(),
   cardImage: z.string().optional(),
   coverImage: z.string().optional(),
+  /** Index thumbnail: contain = full UI visible; cover = fill crop. */
+  cardFit: z.enum(['cover', 'contain']).optional(),
   videoUrl: z.string().optional(),
   relatedProject: z.string().optional(),
   draft: z.boolean().default(false),

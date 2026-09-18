@@ -147,6 +147,79 @@ if (navSource.includes('/builds') || /href: '\/builds'/.test(siteSource)) {
   errors.push('/builds must stay unlisted in primary navigation');
 }
 
+if (!/label: 'How It Works',\s*href: '\/#how-we-work'/.test(siteSource)) {
+  errors.push('How It Works must point to the homepage Opportunity Audit journey');
+}
+
+if (await stat(join(root, 'src/pages/how-i-work.astro')).catch(() => null)) {
+  errors.push('Standalone How It Works page src/pages/how-i-work.astro must be removed');
+}
+
+const howIWorkPage = join(distDir, 'how-i-work/index.html');
+try {
+  const howIWorkHtml = await readFile(howIWorkPage, 'utf8');
+  if (!howIWorkHtml.includes('Redirecting') || !howIWorkHtml.includes('/#how-we-work')) {
+    errors.push('/how-i-work must 301 to the Opportunity Audit landing');
+  }
+} catch {
+  // A missing page (404) is also an acceptable outcome.
+}
+
+if (insightsHtml.includes('/images/insights/how-it-works-editorial-cover-dark.png')) {
+  errors.push('Insights index still uses the decorative How It Works cover');
+}
+
+const builds = await publishedSlugs('builds');
+const buildsIndex = join(distDir, 'builds/index.html');
+let buildsHtml = '';
+try {
+  buildsHtml = await readFile(buildsIndex, 'utf8');
+} catch {
+  errors.push('Builds index is missing from the build');
+}
+
+if (builds.drafts.has('book') === false || builds.published.has('book')) {
+  errors.push('Book must stay an unpublished /builds stub');
+}
+
+if (buildsHtml.includes('/builds/book')) {
+  errors.push('Book must not appear on the /builds index');
+}
+
+const clientIdx = buildsHtml.indexOf('/builds/layer-client-platform');
+const instagramIdx = buildsHtml.indexOf('/builds/instagram-enquiries-to-crm-ready-leads');
+if (clientIdx === -1 || (instagramIdx !== -1 && clientIdx > instagramIdx)) {
+  errors.push('Layer Client Platform must be first on /builds');
+}
+
+if (!buildsHtml.includes('/images/builds/layer-client-platform/layer-client-platform-architecture.png')) {
+  errors.push('Layer Client Platform /builds card must keep the architecture Visual 1');
+}
+
+if (!buildsHtml.includes('/images/builds/instagram-hubspot/visual-4-operations-screenshot.png')) {
+  errors.push('Instagram /builds card must use the operations screenshot');
+}
+
+if (buildsHtml.includes('/images/builds/instagram-hubspot/visual-1-system-works.webp')) {
+  errors.push('Instagram /builds card still uses the flowchart cover');
+}
+
+if (insightsHtml.includes('/images/builds/')) {
+  errors.push('Insights must not use /builds assets');
+}
+
+if (buildsHtml && !/name="robots"[^>]*content="noindex/i.test(buildsHtml)) {
+  errors.push('/builds must stay noindex');
+}
+
+const sitemapFiles = (await walk(distDir)).filter((path) => path.includes('sitemap') && path.endsWith('.xml'));
+for (const file of sitemapFiles) {
+  const xml = await readFile(file, 'utf8');
+  if (xml.includes('/builds')) {
+    errors.push(`${relative(root, file)} must not include /builds`);
+  }
+}
+
 if (errors.length) {
   console.error(errors.map((line) => `✗ ${line}`).join('\n'));
   process.exit(1);
