@@ -210,8 +210,8 @@ const leadMeta = lead ? `${lead.data.series} · ${lead.data.topic} · ${readingT
 
   .insights-lead__image {
     display: block;
-    height: auto;
-    aspect-ratio: 1448 / 1086;
+    position: relative;
+    height: clamp(16rem, 25vw, 23.5rem);
     background: #fff;
   }
 
@@ -224,8 +224,12 @@ const leadMeta = lead ? `${lead.data.series} · ${lead.data.topic} · ${readingT
   }
 
   .insights-lead__image img {
-    object-fit: contain;
-    object-position: top center;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 36%;
   }
 
   .insights-lead__copy,
@@ -364,8 +368,8 @@ const leadMeta = lead ? `${lead.data.series} · ${lead.data.topic} · ${readingT
 
     .insights-lead__image {
       height: auto;
-      max-height: none;
-      aspect-ratio: 1448 / 1086;
+      max-height: 14.5rem;
+      aspect-ratio: 16 / 10;
     }
 
     .insights-case {
