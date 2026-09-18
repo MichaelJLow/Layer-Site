@@ -130,7 +130,7 @@ export const secondaryCta = {
 
 export const howIWorkCta = {
   label: 'How I work',
-  href: '/how-i-work',
+  href: '/#how-we-work',
 } as const;
 
 /**
@@ -791,14 +791,14 @@ export const howIWork = {
 
 export const nav = [
   { label: 'What We Build', href: '/#systems' },
-  { label: 'How It Works', href: '/how-i-work' },
+  { label: 'How It Works', href: '/#how-we-work' },
   { label: 'Insights', href: '/insights' },
   { label: 'About', href: '/about' },
 ] as const;
 
 export const footerNav = [
   { label: 'What We Build', href: '/#systems' },
-  { label: 'How It Works', href: '/how-i-work' },
+  { label: 'How It Works', href: '/#how-we-work' },
   { label: 'Work Together', href: '/#how-we-work' },
   { label: 'Case Studies', href: '/projects' },
   { label: 'Insights', href: '/insights' },

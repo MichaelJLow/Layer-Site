@@ -147,6 +147,14 @@ if (navSource.includes('/builds') || /href: '\/builds'/.test(siteSource)) {
   errors.push('/builds must stay unlisted in primary navigation');
 }
 
+if (!/label: 'How It Works',\s*href: '\/#how-we-work'/.test(siteSource)) {
+  errors.push('How It Works must point to the homepage Opportunity Audit journey');
+}
+
+if (insightsHtml.includes('/images/insights/how-it-works-editorial-cover-dark.png')) {
+  errors.push('Insights index still uses the decorative How It Works cover');
+}
+
 if (errors.length) {
   console.error(errors.map((line) => `✗ ${line}`).join('\n'));
   process.exit(1);
