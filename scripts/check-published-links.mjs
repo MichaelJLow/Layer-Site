@@ -151,6 +151,20 @@ if (!/label: 'How It Works',\s*href: '\/#how-we-work'/.test(siteSource)) {
   errors.push('How It Works must point to the homepage Opportunity Audit journey');
 }
 
+if (await stat(join(root, 'src/pages/how-i-work.astro')).catch(() => null)) {
+  errors.push('Standalone How It Works page src/pages/how-i-work.astro must be removed');
+}
+
+const howIWorkPage = join(distDir, 'how-i-work/index.html');
+try {
+  const howIWorkHtml = await readFile(howIWorkPage, 'utf8');
+  if (!howIWorkHtml.includes('Redirecting') || !howIWorkHtml.includes('/#how-we-work')) {
+    errors.push('/how-i-work must 301 to the Opportunity Audit landing');
+  }
+} catch {
+  // A missing page (404) is also an acceptable outcome.
+}
+
 if (insightsHtml.includes('/images/insights/how-it-works-editorial-cover-dark.png')) {
   errors.push('Insights index still uses the decorative How It Works cover');
 }
