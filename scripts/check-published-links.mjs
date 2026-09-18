@@ -155,6 +155,41 @@ if (insightsHtml.includes('/images/insights/how-it-works-editorial-cover-dark.pn
   errors.push('Insights index still uses the decorative How It Works cover');
 }
 
+const builds = await publishedSlugs('builds');
+const buildsIndex = join(distDir, 'builds/index.html');
+let buildsHtml = '';
+try {
+  buildsHtml = await readFile(buildsIndex, 'utf8');
+} catch {
+  errors.push('Builds index is missing from the build');
+}
+
+if (builds.drafts.has('book') === false || builds.published.has('book')) {
+  errors.push('Book must stay an unpublished /builds stub');
+}
+
+if (buildsHtml.includes('/builds/book')) {
+  errors.push('Book must not appear on the /builds index');
+}
+
+const clientIdx = buildsHtml.indexOf('/builds/layer-client-platform');
+const instagramIdx = buildsHtml.indexOf('/builds/instagram-enquiries-to-crm-ready-leads');
+if (clientIdx === -1 || (instagramIdx !== -1 && clientIdx > instagramIdx)) {
+  errors.push('Layer Client Platform must be first on /builds');
+}
+
+if (buildsHtml && !/name="robots"[^>]*content="noindex/i.test(buildsHtml)) {
+  errors.push('/builds must stay noindex');
+}
+
+const sitemapFiles = (await walk(distDir)).filter((path) => path.includes('sitemap') && path.endsWith('.xml'));
+for (const file of sitemapFiles) {
+  const xml = await readFile(file, 'utf8');
+  if (xml.includes('/builds')) {
+    errors.push(`${relative(root, file)} must not include /builds`);
+  }
+}
+
 if (errors.length) {
   console.error(errors.map((line) => `✗ ${line}`).join('\n'));
   process.exit(1);

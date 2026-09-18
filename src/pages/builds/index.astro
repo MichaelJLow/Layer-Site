@@ -79,7 +79,7 @@ const builds = await getPublishedBuilds();
   }
 
   .builds-hero {
-    padding-block: clamp(6.5rem, 12vw, 10rem) clamp(4.5rem, 8vw, 7rem);
+    padding-block: clamp(2rem, 3.2vw, 2.75rem);
     background:
       radial-gradient(ellipse 42% 55% at 8% 12%, rgba(224, 160, 122, 0.28), transparent 62%),
       radial-gradient(ellipse 38% 48% at 92% 8%, rgba(122, 158, 196, 0.22), transparent 58%),
@@ -89,17 +89,17 @@ const builds = await getPublishedBuilds();
   .builds-hero__grid {
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.72fr);
-    gap: clamp(2.5rem, 8vw, 8rem);
+    gap: clamp(1.5rem, 4vw, 4rem);
     align-items: end;
   }
 
   .builds-hero h1 {
-    max-width: 14ch;
-    margin: 1.1rem 0 0;
-    font-size: clamp(2.6rem, 6vw, 5.6rem);
+    max-width: 24ch;
+    margin: 0.45rem 0 0;
+    font-size: clamp(1.55rem, 2.4vw, 2.1rem);
     font-weight: 400;
-    letter-spacing: -0.068em;
-    line-height: 0.96;
+    letter-spacing: -0.045em;
+    line-height: 1.15;
   }
 
   .builds-hero__grid > p {
@@ -111,7 +111,7 @@ const builds = await getPublishedBuilds();
   }
 
   .builds-library {
-    padding-block: clamp(4.5rem, 8vw, 7.5rem);
+    padding-block: clamp(1.75rem, 3vw, 2.5rem) clamp(4.5rem, 8vw, 7.5rem);
   }
 
   .builds-library__head {
@@ -119,7 +119,7 @@ const builds = await getPublishedBuilds();
     justify-content: space-between;
     gap: 2rem;
     align-items: end;
-    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+    margin-bottom: clamp(1.35rem, 2.4vw, 2rem);
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--builds-line);
   }
