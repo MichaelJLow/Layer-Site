@@ -192,6 +192,22 @@ if (clientIdx === -1 || (instagramIdx !== -1 && clientIdx > instagramIdx)) {
   errors.push('Layer Client Platform must be first on /builds');
 }
 
+if (!buildsHtml.includes('/images/builds/layer-client-platform/layer-client-platform-architecture.png')) {
+  errors.push('Layer Client Platform /builds card must keep the architecture Visual 1');
+}
+
+if (!buildsHtml.includes('/images/builds/instagram-hubspot/visual-4-operations-screenshot.png')) {
+  errors.push('Instagram /builds card must use the operations screenshot');
+}
+
+if (buildsHtml.includes('/images/builds/instagram-hubspot/visual-1-system-works.webp')) {
+  errors.push('Instagram /builds card still uses the flowchart cover');
+}
+
+if (insightsHtml.includes('/images/builds/')) {
+  errors.push('Insights must not use /builds assets');
+}
+
 if (buildsHtml && !/name="robots"[^>]*content="noindex/i.test(buildsHtml)) {
   errors.push('/builds must stay noindex');
 }
